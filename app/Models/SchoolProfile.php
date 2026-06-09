@@ -29,6 +29,8 @@ class SchoolProfile extends Model
         'social_facebook',
         'social_instagram',
         'social_youtube',
+        'contact_whatsapp',
+        'whatsapp_message',
         'footer_navigations',
         'footer_related_links',
         'header_navigations',

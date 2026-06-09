@@ -222,6 +222,27 @@
                                 <input type="url" name="social_youtube" id="social_youtube" class="form-control" value="{{ old('social_youtube', $profile->social_youtube) }}" placeholder="https://youtube.com/...">
                             </div>
                         </div>
+                        
+                        <hr>
+                        <h5 class="text-success mb-3"><i class="fab fa-whatsapp"></i> Pengaturan WhatsApp (Floating Button)</h5>
+                        
+                        <div class="form-group">
+                            <label for="contact_whatsapp">Nomor WhatsApp</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fab fa-whatsapp"></i></span></div>
+                                <input type="text" name="contact_whatsapp" id="contact_whatsapp" class="form-control" value="{{ old('contact_whatsapp', $profile->contact_whatsapp) }}" placeholder="Contoh: 6282260101234 (Gunakan awalan 62)">
+                            </div>
+                            <small class="form-text text-muted">Gunakan awalan 62, tanpa angka 0 di depan, tanda plus (+), atau spasi.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp_message">Pesan Default WhatsApp</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment-dots"></i></span></div>
+                                <input type="text" name="whatsapp_message" id="whatsapp_message" class="form-control" value="{{ old('whatsapp_message', $profile->whatsapp_message) }}" placeholder="Contoh: Halo Admin, saya ingin bertanya...">
+                            </div>
+                            <small class="form-text text-muted">Pesan yang otomatis terisi ketika pengunjung mengklik tombol chat.</small>
+                        </div>
                     </div>
                     
                     <div class="card-footer text-right">
