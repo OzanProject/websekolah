@@ -233,12 +233,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="whatsapp_message">Pesan Default WhatsApp</label>
+                            <label for="whatsapp_message">Pesan Otomatis WhatsApp (Template)</label>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-comment-dots"></i></span></div>
                                 <input type="text" name="whatsapp_message" id="whatsapp_message" class="form-control" value="{{ old('whatsapp_message', $profile->whatsapp_message) }}" placeholder="Contoh: Halo Admin, saya ingin bertanya...">
                             </div>
-                            <small class="form-text text-muted">Pesan yang otomatis terisi ketika pengunjung mengklik tombol chat.</small>
+                            <small class="form-text text-muted">Pesan yang otomatis terisi di kolom chat WhatsApp pengunjung saat mereka akan mengirim pesan.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp_greeting">Pesan Sambutan (Di Dalam Kotak Hijau)</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-hand-sparkles"></i></span></div>
+                                <input type="text" name="whatsapp_greeting" id="whatsapp_greeting" class="form-control" value="{{ old('whatsapp_greeting', $profile->whatsapp_greeting) }}" placeholder="Contoh: Halo! Ada yang bisa kami bantu seputar PPDB?">
+                            </div>
+                            <small class="form-text text-muted">Teks sapaan yang muncul di dalam kotak melayang WhatsApp di halaman depan.</small>
                         </div>
                     </div>
                     

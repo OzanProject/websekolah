@@ -54,6 +54,7 @@ class SchoolProfileController extends Controller
             'social_youtube' => 'nullable|url',
             'contact_whatsapp' => 'nullable|string',
             'whatsapp_message' => 'nullable|string',
+            'whatsapp_greeting' => 'nullable|string',
         ]);
 
         $profile = SchoolProfile::first();
@@ -92,6 +93,7 @@ class SchoolProfileController extends Controller
             'social_youtube' => $request->social_youtube,
             'contact_whatsapp' => $request->contact_whatsapp,
             'whatsapp_message' => $request->whatsapp_message,
+            'whatsapp_greeting' => $request->whatsapp_greeting,
         ];
 
         // Handle File Upload
