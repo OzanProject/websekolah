@@ -169,8 +169,8 @@
                 </li>
 
                 {{-- SISTEM --}}
-                <li class="nav-item {{ Request::is('admin/users*') || Request::is('admin/settings/general*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Request::is('admin/users*') || Request::is('admin/settings/general*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('admin/users*') || Request::is('admin/settings/general*') || Request::is('admin/backups*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/users*') || Request::is('admin/settings/general*') || Request::is('admin/backups*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs"></i>
                         <p>
                             SISTEM
@@ -188,6 +188,12 @@
                             <a href="{{ route('admin.users.index') }}" class="nav-link {{ Request::is('admin/users*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Administrator</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.backups.index') }}" class="nav-link {{ Request::is('admin/backups*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <p>Backup & Restore</p>
                             </a>
                         </li>
                     </ul>

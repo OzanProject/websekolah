@@ -65,6 +65,9 @@
                             <td>{{ $item->title }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td>
                             <td class="text-center">
+                                <a href="{{ route('admin.news.show', $item->id) }}" class="btn btn-sm btn-primary" title="Lihat">
+                                    <i class="fas fa-eye"></i>
+                                </a>
                                 <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -117,8 +120,29 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{{ session('error') }}',
+                    timer: 4000,
+                    showConfirmButton: false
+                });
+            @endif
+
             var table = $('#newsTable').DataTable({
                 "paging": true,
                 "lengthChange": true,

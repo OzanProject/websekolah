@@ -126,6 +126,13 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('settings/general', [\App\Http\Controllers\Admin\GeneralSettingController::class, 'edit'])->name('settings.general.edit');
     Route::put('settings/general', [\App\Http\Controllers\Admin\GeneralSettingController::class, 'update'])->name('settings.general.update');
 
+    // Backup & Restore
+    Route::get('backups', [\App\Http\Controllers\Admin\BackupController::class, 'index'])->name('backups.index');
+    Route::post('backups/create', [\App\Http\Controllers\Admin\BackupController::class, 'create'])->name('backups.create');
+    Route::get('backups/download/{filename}', [\App\Http\Controllers\Admin\BackupController::class, 'download'])->name('backups.download');
+    Route::delete('backups/destroy/{filename}', [\App\Http\Controllers\Admin\BackupController::class, 'destroy'])->name('backups.destroy');
+    Route::post('backups/restore', [\App\Http\Controllers\Admin\BackupController::class, 'restore'])->name('backups.restore');
+
     // Pengaturan PPDB
     Route::get('settings/ppdb', [\App\Http\Controllers\Admin\PpdbSettingController::class, 'edit'])->name('settings.ppdb.edit');
     Route::put('settings/ppdb', [\App\Http\Controllers\Admin\PpdbSettingController::class, 'update'])->name('settings.ppdb.update');
