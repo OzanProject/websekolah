@@ -31,7 +31,7 @@ class HomeController extends Controller
         })->toArray();
 
         // Data Galeri (Dari Database)
-        $galleryItems = \App\Models\Gallery::take(8)->get();
+        $galleryItems = \App\Models\Gallery::take(6)->get();
         $gallery = $galleryItems->map(function($item) {
             return [
                 'src' => filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path),

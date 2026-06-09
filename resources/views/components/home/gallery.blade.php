@@ -1,4 +1,4 @@
-@props(['gallery'])
+@props(['gallery', 'showAllButton' => false])
 
 {{-- PERBAIKAN 1: Ekstrak data galeri ke JSON agar bisa dibaca Alpine.js --}}
 @php
@@ -78,6 +78,14 @@
             @endforeach
             
         </div>
+
+        @if($showAllButton)
+            <div class="mt-12 text-center">
+                <a href="{{ url('/galeri') }}" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 rounded-full bg-[#1E3A8A] hover:bg-[#1E40AF] hover:shadow-lg hover:-translate-y-0.5 text-white group">
+                    Lihat Semua Galeri <x-lucide-arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+            </div>
+        @endif
     </div>
 
     {{-- Lightbox Modal Dinamis --}}
@@ -92,7 +100,7 @@
          x-transition:leave-end="opacity-0">
         
         {{-- Close button (Atas) --}}
-        <button @click="lightboxOpen = false" class="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-colors z-[110]" title="{{ __('Tutup') }} (Esc)">
+        <button @click="lightboxOpen = false" class="absolute top-4 right-4 text-slate-800 hover:text-black bg-white hover:bg-slate-100 rounded-full p-2.5 transition-colors z-[110] shadow-lg" title="{{ __('Tutup') }} (Esc)">
             <x-lucide-x class="w-6 h-6" />
         </button>
 
@@ -109,12 +117,12 @@
              x-transition:leave-end="opacity-0 scale-95">
              
             {{-- PERBAIKAN 5: Panah Navigasi --}}
-            <button @click="prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-full md:mr-4 group hidden md:flex items-center justify-center text-white/50 hover:text-white transition z-[110]" title="{{ __('Sebelumnya') }} (←)">
-                <x-lucide-chevron-left class="w-12 h-12 md:w-16 md:h-16 group-hover:scale-110 transition-transform drop-shadow-lg" />
+            <button @click="prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-full md:mr-4 group hidden md:flex items-center justify-center text-slate-800 hover:text-black bg-white hover:bg-slate-100 rounded-full p-3 transition-all z-[110] shadow-xl border border-slate-200" title="{{ __('Sebelumnya') }} (←)">
+                <x-lucide-chevron-left class="w-8 h-8 md:w-10 md:h-10 group-hover:-translate-x-1 transition-transform" />
             </button>
             
-            <button @click="next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-full md:ml-4 group hidden md:flex items-center justify-center text-white/50 hover:text-white transition z-[110]" title="{{ __('Selanjutnya') }} (→)">
-                <x-lucide-chevron-right class="w-12 h-12 md:w-16 md:h-16 group-hover:scale-110 transition-transform drop-shadow-lg" />
+            <button @click="next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-full md:ml-4 group hidden md:flex items-center justify-center text-slate-800 hover:text-black bg-white hover:bg-slate-100 rounded-full p-3 transition-all z-[110] shadow-xl border border-slate-200" title="{{ __('Selanjutnya') }} (→)">
+                <x-lucide-chevron-right class="w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-1 transition-transform" />
             </button>
             
             {{-- Wrapper Gambar + Teks agar flexibel dan tidak nabrak --}}
@@ -133,11 +141,11 @@
             </div>
             
             {{-- Navigasi Mobile (Bawah) --}}
-            <div class="flex md:hidden items-center gap-8 mt-2 pb-4 z-[110]">
-                <button @click="prev()" class="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 active:bg-white/30 rounded-full text-white backdrop-blur-md transition-colors border border-white/10">
+            <div class="flex md:hidden items-center gap-6 mt-3 pb-4 z-[110]">
+                <button @click="prev()" class="w-12 h-12 flex items-center justify-center bg-white hover:bg-slate-100 active:bg-slate-200 rounded-full text-slate-800 transition-colors shadow-lg border border-slate-200">
                     <x-lucide-chevron-left class="w-6 h-6" />
                 </button>
-                <button @click="next()" class="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 active:bg-white/30 rounded-full text-white backdrop-blur-md transition-colors border border-white/10">
+                <button @click="next()" class="w-12 h-12 flex items-center justify-center bg-white hover:bg-slate-100 active:bg-slate-200 rounded-full text-slate-800 transition-colors shadow-lg border border-slate-200">
                     <x-lucide-chevron-right class="w-6 h-6" />
                 </button>
             </div>

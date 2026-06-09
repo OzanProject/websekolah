@@ -13,9 +13,9 @@
     <x-home.news :latestNews="$latestNews" />
 
     <x-home.agenda :agenda="$agenda" />
-    <x-home.gallery :gallery="$gallery" />
+    <x-home.gallery :gallery="$gallery" :show-all-button="true" />
     <x-home.video :video="$video" />
-    <x-home.facilities :facilities="$facilities" />
+    <x-home.facilities :facilities="$facilities" :show-all-button="true" />
     <x-home.testimoni :testimonials="$testimonials" />
     <x-home.contact :profile="$profile" />
 

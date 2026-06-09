@@ -1,4 +1,4 @@
-@props(['facilities'])
+@props(['facilities', 'showAllButton' => false])
 <section id="facilities" class="py-20 lg:py-28 bg-white" data-testid="facilities-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12">
@@ -34,5 +34,13 @@
             </div>
             @endforeach
         </div>
+
+        @if($showAllButton)
+            <div class="mt-12 text-center">
+                <a href="{{ url('/fasilitas') }}" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 h-11 px-8 rounded-full bg-[#1E3A8A] hover:bg-[#1E40AF] hover:shadow-lg hover:-translate-y-0.5 text-white group">
+                    Lihat Semua Fasilitas <x-lucide-arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </a>
+            </div>
+        @endif
     </div>
 </section>
