@@ -16,13 +16,7 @@
         @csrf
         @method('PUT')
         <div class="card-body">
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h5><i class="icon fas fa-check"></i> Sukses!</h5>
-                    {{ session('success') }}
-                </div>
-            @endif
+
 
             <div class="form-group">
                 <div class="custom-control custom-switch custom-switch-lg">
@@ -577,6 +571,24 @@
                 $('#options_group').addClass('d-none');
             }
         });
+
+        @if(session('success'))
+            Swal.fire({
+                title: 'Sukses!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if($errors->any())
+            Swal.fire({
+                title: 'Terdapat Kesalahan!',
+                html: '<ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+                icon: 'error'
+            });
+        @endif
 
         // File input label update
         $('.custom-file-input').on('change', function() {
