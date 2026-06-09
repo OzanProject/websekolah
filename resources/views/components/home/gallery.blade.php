@@ -100,7 +100,7 @@
         <div class="absolute inset-0 z-[101]" @click="lightboxOpen = false"></div>
 
         {{-- Image & Navigation Container --}}
-        <div class="relative max-w-5xl w-full max-h-full flex flex-col items-center justify-center z-[102]"
+        <div class="relative max-w-6xl w-full h-full flex flex-col items-center justify-center z-[102] py-8"
              x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 scale-95"
              x-transition:enter-end="opacity-100 scale-100"
@@ -109,32 +109,36 @@
              x-transition:leave-end="opacity-0 scale-95">
              
             {{-- PERBAIKAN 5: Panah Navigasi --}}
-            
-            <button @click="prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full mr-4 group hidden md:flex items-center justify-center text-white/60 hover:text-white transition z-[110]" title="{{ __('Sebelumnya') }} (←)">
-                <x-lucide-chevron-left class="w-16 h-16 group-hover:scale-110 transition-transform" />
+            <button @click="prev()" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 md:-translate-x-full md:mr-4 group hidden md:flex items-center justify-center text-white/50 hover:text-white transition z-[110]" title="{{ __('Sebelumnya') }} (←)">
+                <x-lucide-chevron-left class="w-12 h-12 md:w-16 md:h-16 group-hover:scale-110 transition-transform drop-shadow-lg" />
             </button>
             
-            <button @click="next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full ml-4 group hidden md:flex items-center justify-center text-white/60 hover:text-white transition z-[110]" title="{{ __('Selanjutnya') }} (→)">
-                <x-lucide-chevron-right class="w-16 h-16 group-hover:scale-110 transition-transform" />
+            <button @click="next()" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 md:translate-x-full md:ml-4 group hidden md:flex items-center justify-center text-white/50 hover:text-white transition z-[110]" title="{{ __('Selanjutnya') }} (→)">
+                <x-lucide-chevron-right class="w-12 h-12 md:w-16 md:h-16 group-hover:scale-110 transition-transform drop-shadow-lg" />
             </button>
             
-            {{-- Gambar Utama (Dinamis mengambil dari currentItem) --}}
-            <img :src="currentItem.src" :alt="currentItem.title" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border-2 border-white/10">
-            
-            {{-- Keterangan & Counter (Dinamis) --}}
-            <div class="mt-6 text-center text-white">
-                <p class="font-medium text-lg tracking-wide mb-1" x-text="currentItem.title"></p>
-                {{-- Counter untuk info urutan foto --}}
-                <p class="text-sm text-white/60 font-mono" x-text="(currentIndex + 1) + ' / ' + items.length"></p>
+            {{-- Wrapper Gambar + Teks agar flexibel dan tidak nabrak --}}
+            <div class="flex flex-col items-center justify-center h-full w-full min-h-0">
+                {{-- Gambar Utama --}}
+                <img :src="currentItem.src" :alt="currentItem.title" class="max-w-full min-h-0 object-contain rounded-xl shadow-2xl border border-white/10" style="max-height: 70vh;">
+                
+                {{-- Keterangan & Counter (Premium Box Style) --}}
+                <div class="mt-4 md:mt-6 flex-shrink-0 bg-white px-6 py-3 md:py-4 rounded-2xl shadow-xl border border-slate-100 text-center max-w-2xl mx-auto w-[90%] md:w-auto transition-all duration-300 transform translate-y-0">
+                    <p class="font-semibold text-slate-800 text-sm md:text-lg leading-snug line-clamp-2" x-text="currentItem.title"></p>
+                    <div class="flex items-center justify-center gap-2 mt-1.5">
+                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                        <p class="text-xs md:text-sm text-slate-500 font-mono font-medium tracking-widest" x-text="(currentIndex + 1) + ' / ' + items.length"></p>
+                    </div>
+                </div>
             </div>
             
             {{-- Navigasi Mobile (Bawah) --}}
-            <div class="flex md:hidden items-center gap-6 mt-5 z-[110]">
-                <button @click="prev()" class="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white">
-                    <x-lucide-chevron-left class="w-7 h-7" />
+            <div class="flex md:hidden items-center gap-8 mt-2 pb-4 z-[110]">
+                <button @click="prev()" class="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 active:bg-white/30 rounded-full text-white backdrop-blur-md transition-colors border border-white/10">
+                    <x-lucide-chevron-left class="w-6 h-6" />
                 </button>
-                <button @click="next()" class="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full text-white">
-                    <x-lucide-chevron-right class="w-7 h-7" />
+                <button @click="next()" class="w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 active:bg-white/30 rounded-full text-white backdrop-blur-md transition-colors border border-white/10">
+                    <x-lucide-chevron-right class="w-6 h-6" />
                 </button>
             </div>
         </div>
