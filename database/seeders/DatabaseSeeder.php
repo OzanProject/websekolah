@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@sekolah.com',
             'password' => bcrypt('password'),
@@ -84,6 +84,7 @@ class DatabaseSeeder extends Seeder
             News::create($item);
         }
 
+        $this->call(SchoolProfileSeeder::class);
         $this->call(DummyDataSeeder::class);
     }
 }
