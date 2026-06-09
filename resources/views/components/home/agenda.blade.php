@@ -13,9 +13,11 @@
                     <p class="text-slate-600 leading-relaxed mb-6">
                         Jadwal kegiatan, acara, dan kalender akademik SMPN 4 Kadupandak yang akan datang.
                     </p>
-                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-md bg-[#1E3A8A] hover:bg-[#1E40AF] text-white" data-testid="agenda-view-all-btn">
-                        Lihat Semua Agenda <x-lucide-arrow-right class="w-4 h-4 ml-2" />
-                    </button>
+                    @if(request()->is('/'))
+                        <a href="/agenda" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 rounded-md bg-[#1E3A8A] hover:bg-[#1E40AF] text-white" data-testid="agenda-view-all-btn">
+                            Lihat Semua Agenda <x-lucide-arrow-right class="w-4 h-4 ml-2" />
+                        </a>
+                    @endif
                 </div>
             </div>
 
