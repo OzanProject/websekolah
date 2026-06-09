@@ -48,6 +48,7 @@ class SchoolProfile extends Model
         'hero_btn1_url',
         'hero_btn2_text',
         'hero_btn2_url',
+        'ppdb_slug',
     ];
 
     protected $casts = [

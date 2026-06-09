@@ -24,9 +24,9 @@
             <div class="flex flex-wrap gap-3">
                 @php
                     $btn1Text = $profile->hero_btn1_text ?? 'Daftar PPDB Online';
-                    $btn1Url = $profile->hero_btn1_url ?? url('/ppdb');
+                    $btn1Url = $profile->hero_btn1_url ?? route('ppdb.create');
                     
-                    if ($btn1Url === url('/ppdb') && (!$profile || !$profile->ppdb_active)) {
+                    if ($btn1Url === route('ppdb.create') && (!$profile || !$profile->ppdb_active)) {
                         $btn1Url = '';
                     }
                     

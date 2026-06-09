@@ -152,7 +152,7 @@
                             <p class="text-slate-500">Formulir pendaftaran belum dikonfigurasi oleh Administrator.</p>
                         </div>
                     @else
-                        <form action="{{ url('/ppdb') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+                        <form action="{{ route('ppdb.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                             @csrf
                             
                             @php

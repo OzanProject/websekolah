@@ -47,6 +47,17 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="ppdb_slug">URL PPDB (Slug)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">{{ url('/') }}/</span>
+                    </div>
+                    <input type="text" class="form-control" id="ppdb_slug" name="ppdb_slug" value="{{ old('ppdb_slug', $profile->ppdb_slug) }}" placeholder="Contoh: pendaftaran-baru">
+                </div>
+                <small class="text-muted d-block mt-1">Jangan gunakan spasi atau karakter spesial. Hanya huruf, angka, dan tanda strip (-).</small>
+            </div>
+
             <div class="form-group mb-0">
                 <label for="ppdb_description">Deskripsi Tambahan / Pengumuman</label>
                 <textarea class="form-control" id="ppdb_description" name="ppdb_description" rows="2" placeholder="Contoh: Silakan isi formulir dengan data yang valid...">{{ old('ppdb_description', $profile->ppdb_description) }}</textarea>

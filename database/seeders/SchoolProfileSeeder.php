@@ -43,6 +43,7 @@ class SchoolProfileSeeder extends Seeder
             'hero_btn2_text' => 'Profil Sekolah',
             'hero_btn2_url' => '/page/profil',
             'ppdb_active' => true,
+            'ppdb_slug' => 'pendaftaran',
             'ppdb_title' => 'Penerimaan Peserta Didik Baru (PPDB) 2026/2027',
             'ppdb_year' => '2026/2027',
             'ppdb_description' => 'Bergabunglah bersama kami untuk masa depan yang lebih cerah.',

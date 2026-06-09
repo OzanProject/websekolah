@@ -14,10 +14,22 @@ Route::get('/agenda', [PageController::class, 'agenda']);
 Route::get('/fasilitas', [PageController::class, 'fasilitas']);
 Route::get('/kontak', [PageController::class, 'kontak']);
 
-Route::get('/ppdb', [PpdbController::class, 'create']);
-Route::post('/ppdb', [PpdbController::class, 'store']);
-Route::post('/ppdb/cek-status', [PpdbController::class, 'checkStatus'])->name('ppdb.check-status');
-Route::get('/ppdb/cek-status', function () { return redirect('/ppdb'); });
+$ppdbSlug = 'pendaftaran';
+try {
+    if (\Illuminate\Support\Facades\Schema::hasTable('school_profiles')) {
+        $profile = \App\Models\SchoolProfile::first();
+        if ($profile && !empty($profile->ppdb_slug)) {
+            $ppdbSlug = $profile->ppdb_slug;
+        }
+    }
+} catch (\Exception $e) {
+    // Ignore if DB not ready
+}
+
+Route::get("/{$ppdbSlug}", [PpdbController::class, 'create'])->name('ppdb.create');
+Route::post("/{$ppdbSlug}", [PpdbController::class, 'store'])->name('ppdb.store');
+Route::post("/{$ppdbSlug}/cek-status", [PpdbController::class, 'checkStatus'])->name('ppdb.check-status');
+Route::get("/{$ppdbSlug}/cek-status", function () use ($ppdbSlug) { return redirect("/{$ppdbSlug}"); });
 Route::get('/berita', [NewsController::class, 'index']);
 Route::get('/berita/{slug}', [NewsController::class, 'show']);
 Route::get('/halaman/{slug}', [PageController::class, 'showCustomPage'])->name('custom.page');
