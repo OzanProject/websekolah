@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <p class="text-sm text-white/70 leading-relaxed mb-6">
-                    {{ $profile && $profile->school_name ? $profile->school_name : 'SMP Negeri 4 Kadupandak' }} adalah sekolah yang berkomitmen mendidik siswa berkarakter, berprestasi, dan berakhlak mulia.
+                    {{ $profile && $profile->school_description ? $profile->school_description : ($profile && $profile->school_name ? $profile->school_name : 'SMP Negeri 4 Kadupandak') . ' adalah sekolah yang berkomitmen mendidik siswa berkarakter, berprestasi, dan berakhlak mulia.' }}
                 </p>
                 <div class="flex gap-2">
                     @if($profile && $profile->social_facebook)

@@ -33,6 +33,12 @@
                             <small class="text-muted">Akan ditampilkan di bawah nama sekolah pada header & footer.</small>
                         </div>
 
+                        <div class="form-group">
+                            <label for="school_description">Deskripsi Singkat Sekolah (Untuk Footer)</label>
+                            <textarea class="form-control" id="school_description" name="school_description" rows="3" placeholder="Contoh: SMP Negeri 4 Kadupandak adalah sekolah yang berkomitmen mendidik siswa berkarakter...">{{ old('school_description', $profile->school_description) }}</textarea>
+                            <small class="text-muted">Ditampilkan pada bagian bawah (footer) website.</small>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">

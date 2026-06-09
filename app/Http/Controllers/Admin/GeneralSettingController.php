@@ -26,6 +26,7 @@ class GeneralSettingController extends Controller
         $request->validate([
             'school_name' => 'nullable|string|max:255',
             'school_tagline' => 'nullable|string|max:255',
+            'school_description' => 'nullable|string|max:1000',
             'school_npsn' => 'nullable|string|max:50',
             'school_nss' => 'nullable|string|max:50',
             'school_accreditation' => 'nullable|string|max:50',
@@ -41,6 +42,7 @@ class GeneralSettingController extends Controller
         $data = $request->only([
             'school_name', 
             'school_tagline', 
+            'school_description',
             'school_npsn', 
             'school_nss', 
             'school_accreditation',
