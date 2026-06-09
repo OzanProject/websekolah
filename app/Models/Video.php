@@ -39,7 +39,7 @@ class Video extends Model
             get: function () {
                 $id = $this->youtube_id;
                 return $id 
-                    ? "https://img.youtube.com/vi/{$id}/maxresdefault.jpg" 
+                    ? "https://img.youtube.com/vi/{$id}/hqdefault.jpg" 
                     : "https://images.pexels.com/photos/18145430/pexels-photo-18145430.jpeg";
             }
         );
