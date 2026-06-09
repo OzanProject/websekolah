@@ -68,13 +68,15 @@
     <script>
         tinymce.init({
             selector: '#content',
-            height: 500,
-            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template help',
-            toolbar: 'undo redo | styles | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | table | forecolor backcolor emoticons | code preview fullscreen',
+            height: 400,
+            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code media table',
+            toolbar_mode: 'floating',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code media table',
             menubar: 'file edit view insert format tools table help',
             image_title: true,
             automatic_uploads: true,
             file_picker_types: 'image',
+            valid_elements: '*[*]',
         });
 
         $(document).ready(function() {

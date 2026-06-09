@@ -239,10 +239,11 @@
             // TinyMCE initialization for sambutan
             tinymce.init({
                 selector: '.tinymce',
-                height: 300,
-                plugins: 'advlist autolink lists link charmap print preview hr anchor pagebreak',
+                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak code media table',
                 toolbar_mode: 'floating',
-                toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+                toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code media table',
+                height: 300,
+                valid_elements: '*[*]',
             });
 
             // Fungsi Tambah Misi diubah menjadi fungsi global
