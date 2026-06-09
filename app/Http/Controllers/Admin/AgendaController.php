@@ -25,12 +25,10 @@ class AgendaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|array',
-            'title.id' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'date' => 'required|date',
             'time' => 'required|string|max:255',
-            'location' => 'required|array',
-            'location.id' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
         ]);
 
         Agenda::create($request->all());
@@ -46,12 +44,10 @@ class AgendaController extends Controller
     public function update(Request $request, Agenda $agenda)
     {
         $request->validate([
-            'title' => 'required|array',
-            'title.id' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'date' => 'required|date',
             'time' => 'required|string|max:255',
-            'location' => 'required|array',
-            'location.id' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
         ]);
 
         $agenda->update($request->all());

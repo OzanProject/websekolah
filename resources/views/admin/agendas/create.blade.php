@@ -12,12 +12,12 @@
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label for="title_id">Judul Agenda</label>
-                    <input type="text" name="title[id]" class="form-control" id="title_id" value="{{ old('title.id') }}" placeholder="Masukkan judul agenda" required>
+                    <label for="title">Judul Agenda</label>
+                    <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}" placeholder="Masukkan judul agenda" required>
                 </div>
                 <div class="form-group">
-                    <label for="location_id">Lokasi</label>
-                    <input type="text" name="location[id]" class="form-control" id="location_id" value="{{ old('location.id') }}" placeholder="Masukkan lokasi agenda" required>
+                    <label for="location">Lokasi</label>
+                    <input type="text" name="location" class="form-control" id="location" value="{{ old('location') }}" placeholder="Masukkan lokasi agenda" required>
                 </div>
 
                 <div class="form-group">
