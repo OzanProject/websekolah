@@ -8,10 +8,7 @@
 
 @section('content')
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            {{ session('success') }}
-        </div>
+        <!-- SweetAlert handles success below -->
     @endif
     
     @if ($errors->any())
@@ -257,6 +254,16 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            @endif
+
             // TinyMCE initialization for sambutan
             tinymce.init({
                 selector: '.tinymce',
