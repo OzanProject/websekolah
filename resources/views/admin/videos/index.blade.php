@@ -46,7 +46,7 @@
                             </td>
                             <td class="text-center">
                                 @if(!$item->is_active)
-                                <form action="{{ route('admin.videos.activate', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Aktifkan video ini? Video lain akan otomatis dinonaktifkan.')">
+                                <form action="{{ route('admin.videos.activate', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Aktifkan video ini? Video lain akan otomatis dinonaktifkan.">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" class="btn btn-sm btn-success" title="Jadikan Aktif">
@@ -57,7 +57,7 @@
                                 <a href="{{ route('admin.videos.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form action="{{ route('admin.videos.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus video ini?')">
+                                <form action="{{ route('admin.videos.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus video ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" title="Hapus">

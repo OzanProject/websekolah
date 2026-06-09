@@ -36,7 +36,7 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <a href="mailto:{{ $message->email }}" class="btn btn-default"><i class="fas fa-reply"></i> Balas ke Email</a>
-                    <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="d-inline float-right" onsubmit="return confirm('Yakin ingin menghapus pesan ini?');">
+                    <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="d-inline float-right swal-delete-form" data-confirm-msg="Yakin ingin menghapus pesan ini?">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">

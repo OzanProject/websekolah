@@ -267,7 +267,11 @@
                 if ($('.misi-row').length > 1) {
                     $(this).closest('.misi-row').remove();
                 } else {
-                    alert('Harus ada minimal 1 poin misi!');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Harus ada minimal 1 poin misi!'
+                    });
                 }
             });
 

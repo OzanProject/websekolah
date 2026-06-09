@@ -60,7 +60,7 @@
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 @if(auth()->id() !== $item->id && $users->count() > 1)
-                                <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus admin ini?')">
+                                <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus admin ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" title="Hapus">

@@ -261,7 +261,11 @@
                 if ($('.nav-row').length > 1) {
                     $(this).closest('.nav-row').remove();
                 } else {
-                    alert('Harus ada minimal 1 link navigasi!');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Harus ada minimal 1 link navigasi!'
+                    });
                 }
             });
 
@@ -283,7 +287,11 @@
                 if ($('.link-row').length > 1) {
                     $(this).closest('.link-row').remove();
                 } else {
-                    alert('Harus ada minimal 1 link terkait!');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Harus ada minimal 1 link terkait!'
+                    });
                 }
             });
         });

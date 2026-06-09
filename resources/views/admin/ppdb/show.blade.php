@@ -176,7 +176,7 @@
                 </div>
                 <div class="card-body">
                     <p class="small text-muted mb-3">Tindakan ini akan menghapus data pendaftar ini beserta seluruh berkas yang telah diunggahnya dari server.</p>
-                    <form action="{{ route('admin.ppdb.destroy', $ppdb->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus permanen data ini?');">
+                    <form action="{{ route('admin.ppdb.destroy', $ppdb->id) }}" method="POST" class="swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus permanen data ini?">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-block font-weight-bold"><i class="fas fa-trash-alt mr-2"></i> Hapus Data Pendaftar</button>
                     </form>
