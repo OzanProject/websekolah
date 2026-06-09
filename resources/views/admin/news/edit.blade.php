@@ -68,6 +68,37 @@
             toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code media table',
             height: 400,
             valid_elements: '*[*]',
+            images_upload_url: '{{ route("admin.upload.tinymce") }}',
+            automatic_uploads: true,
+            file_picker_types: 'image media file',
+            file_picker_callback: function (cb, value, meta) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                if (meta.filetype === 'image') {
+                    input.setAttribute('accept', 'image/*');
+                } else if (meta.filetype === 'media') {
+                    input.setAttribute('accept', 'video/*,audio/*');
+                } else {
+                    input.setAttribute('accept', '*/*');
+                }
+                input.onchange = function () {
+                    var file = this.files[0];
+                    var formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('_token', '{{ csrf_token() }}');
+                    fetch('{{ route("admin.upload.tinymce") }}', { method: 'POST', body: formData })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.location) {
+                            cb(data.location, { title: file.name });
+                        } else {
+                            alert(data.error || 'Upload failed');
+                        }
+                    })
+                    .catch(error => { alert('Upload failed'); });
+                };
+                input.click();
+            },
         });
     </script>
 @stop

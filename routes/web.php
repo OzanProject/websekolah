@@ -59,6 +59,9 @@ Auth::routes();
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     
+    // Upload TinyMCE
+    Route::post('/upload/tinymce', [\App\Http\Controllers\Admin\UploadController::class, 'tinymceUpload'])->name('upload.tinymce');
+    
     // Programs
     Route::post('programs/bulk-destroy', [\App\Http\Controllers\Admin\ProgramController::class, 'bulkDestroy'])->name('programs.bulkDestroy');
     Route::post('programs/import', [\App\Http\Controllers\Admin\ProgramController::class, 'import'])->name('programs.import');
