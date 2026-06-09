@@ -6,6 +6,9 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1>Testimoni</h1>
         <div>
+            <button class="btn btn-danger mr-2" id="btnDeleteSelected" style="display: none;">
+                <i class="fas fa-trash"></i> Hapus Terpilih
+            </button>
             <button type="button" class="btn btn-success mr-2" data-toggle="modal" data-target="#importModal">
                 <i class="fas fa-file-excel"></i> Import Excel
             </button>
@@ -35,6 +38,9 @@
             <table id="testimonialsTable" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
+                        <th style="width: 40px" class="text-center">
+                            <input type="checkbox" id="checkAll">
+                        </th>
                         <th style="width: 50px">No</th>
                         <th style="width: 80px">Avatar</th>
                         <th>Nama</th>
@@ -46,6 +52,9 @@
                 <tbody>
                     @foreach ($testimonials as $index => $item)
                         <tr>
+                            <td class="text-center">
+                                <input type="checkbox" class="checkItem" value="{{ $item->id }}">
+                            </td>
                             <td>{{ $index + 1 }}</td>
                             <td class="text-center">
                                 @if($item->avatar_path)
@@ -112,7 +121,7 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $('#testimonialsTable').DataTable({
+            var table = $('#testimonialsTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -120,8 +129,91 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": [0, 2, 6] }
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
+                }
+            });
+
+            // Handle Check All
+            $('#checkAll').on('click', function() {
+                var isChecked = $(this).prop('checked');
+                $('.checkItem').prop('checked', isChecked);
+                toggleDeleteButton();
+            });
+
+            // Handle Individual Checkbox
+            $('#testimonialsTable tbody').on('change', '.checkItem', function() {
+                if (!$(this).prop('checked')) {
+                    $('#checkAll').prop('checked', false);
+                }
+                
+                if ($('.checkItem:checked').length === $('.checkItem').length) {
+                    $('#checkAll').prop('checked', true);
+                }
+                toggleDeleteButton();
+            });
+
+            // Handle pagination/search change to uncheck 'Check All'
+            table.on('draw', function() {
+                $('#checkAll').prop('checked', false);
+                $('.checkItem').prop('checked', false);
+                toggleDeleteButton();
+            });
+
+            function toggleDeleteButton() {
+                if ($('.checkItem:checked').length > 0) {
+                    $('#btnDeleteSelected').fadeIn();
+                } else {
+                    $('#btnDeleteSelected').fadeOut();
+                }
+            }
+
+            // Handle Bulk Delete
+            $('#btnDeleteSelected').on('click', function() {
+                var selectedIds = [];
+                $('.checkItem:checked').each(function() {
+                    selectedIds.push($(this).val());
+                });
+
+                if (selectedIds.length > 0) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Anda akan menghapus ' + selectedIds.length + ' testimoni yang dipilih. Tindakan ini tidak dapat dibatalkan!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "{{ route('admin.testimonials.bulkDestroy') }}",
+                                type: 'POST',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                    ids: selectedIds
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        Swal.fire({
+                                            title: 'Terhapus!',
+                                            text: response.message,
+                                            icon: 'success'
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    }
+                                },
+                                error: function(xhr) {
+                                    Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                                }
+                            });
+                        }
+                    });
                 }
             });
         });

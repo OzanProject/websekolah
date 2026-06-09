@@ -71,4 +71,28 @@ class PpdbController extends Controller
 
         return redirect()->route('admin.ppdb.index')->with('success', 'Data pendaftar berhasil dihapus.');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:ppdbs,id',
+        ]);
+
+        $items = Ppdb::whereIn('id', $request->ids)->get();
+
+        foreach ($items as $ppdb) {
+            /** @var \App\Models\Ppdb $ppdb */
+            if (is_array($ppdb->requirements_data)) {
+                foreach ($ppdb->requirements_data as $req) {
+                    if (isset($req['file']) && \Storage::disk('public')->exists($req['file'])) {
+                        \Storage::disk('public')->delete($req['file']);
+                    }
+                }
+            }
+            $ppdb->delete();
+        }
+
+        return response()->json(['success' => true, 'message' => 'Data pendaftar terpilih berhasil dihapus.']);
+    }
 }

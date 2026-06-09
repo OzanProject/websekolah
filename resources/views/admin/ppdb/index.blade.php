@@ -22,7 +22,10 @@
             <div class="card card-outline card-primary shadow-sm">
                 <div class="card-header bg-white">
                     <h3 class="card-title font-weight-bold">Daftar Calon Siswa Baru</h3>
-                    <div class="card-tools">
+                    <div class="card-tools d-flex align-items-center">
+                        <button class="btn btn-sm btn-danger mr-3" id="btnDeleteSelected" style="display: none;">
+                            <i class="fas fa-trash"></i> Hapus Terpilih
+                        </button>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                         </button>
@@ -41,6 +44,9 @@
                         <table id="ppdbTable" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <th width="4%" class="text-center">
+                                        <input type="checkbox" id="checkAll">
+                                    </th>
                                     <th width="5%" class="text-center">No</th>
                                     <th width="15%">No. Pendaftaran</th>
                                     <th width="15%">Waktu Daftar</th>
@@ -54,6 +60,9 @@
                             <tbody>
                                 @foreach($ppdbs as $ppdb)
                                     <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="checkItem" value="{{ $ppdb->id }}">
+                                        </td>
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td><strong>{{ $ppdb->nomor }}</strong></td>
                                         <td>{{ $ppdb->created_at->format('d/m/Y H:i') }}</td>
@@ -106,7 +115,7 @@
 @section('js')
     <script>
         $(function () {
-            $('#ppdbTable').DataTable({
+            var table = $('#ppdbTable').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -114,8 +123,91 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": [0, -1] }
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json"
+                }
+            });
+
+            // Handle Check All
+            $('#checkAll').on('click', function() {
+                var isChecked = $(this).prop('checked');
+                $('.checkItem').prop('checked', isChecked);
+                toggleDeleteButton();
+            });
+
+            // Handle Individual Checkbox
+            $('#ppdbTable tbody').on('change', '.checkItem', function() {
+                if (!$(this).prop('checked')) {
+                    $('#checkAll').prop('checked', false);
+                }
+                
+                if ($('.checkItem:checked').length === $('.checkItem').length) {
+                    $('#checkAll').prop('checked', true);
+                }
+                toggleDeleteButton();
+            });
+
+            // Handle pagination/search change to uncheck 'Check All'
+            table.on('draw', function() {
+                $('#checkAll').prop('checked', false);
+                $('.checkItem').prop('checked', false);
+                toggleDeleteButton();
+            });
+
+            function toggleDeleteButton() {
+                if ($('.checkItem:checked').length > 0) {
+                    $('#btnDeleteSelected').fadeIn();
+                } else {
+                    $('#btnDeleteSelected').fadeOut();
+                }
+            }
+
+            // Handle Bulk Delete
+            $('#btnDeleteSelected').on('click', function() {
+                var selectedIds = [];
+                $('.checkItem:checked').each(function() {
+                    selectedIds.push($(this).val());
+                });
+
+                if (selectedIds.length > 0) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: 'Anda akan menghapus ' + selectedIds.length + ' data pendaftar. Berkas pendaftar juga akan dihapus. Tindakan ini tidak dapat dibatalkan!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "{{ route('admin.ppdb.bulkDestroy') }}",
+                                type: 'POST',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                    ids: selectedIds
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        Swal.fire({
+                                            title: 'Terhapus!',
+                                            text: response.message,
+                                            icon: 'success'
+                                        }).then(() => {
+                                            location.reload();
+                                        });
+                                    }
+                                },
+                                error: function(xhr) {
+                                    Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data.', 'error');
+                                }
+                            });
+                        }
+                    });
                 }
             });
         });

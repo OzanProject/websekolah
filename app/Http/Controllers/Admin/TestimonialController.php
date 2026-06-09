@@ -102,4 +102,23 @@ class TestimonialController extends Controller
     {
         return Excel::download(new TestimonialTemplateExport, 'Template_Import_Testimoni.xlsx');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:testimonials,id',
+        ]);
+
+        $items = Testimonial::whereIn('id', $request->ids)->get();
+
+        foreach ($items as $item) {
+            if ($item->avatar_path && Storage::disk('public')->exists($item->avatar_path)) {
+                Storage::disk('public')->delete($item->avatar_path);
+            }
+            $item->delete();
+        }
+
+        return response()->json(['success' => true, 'message' => 'Testimoni terpilih berhasil dihapus.']);
+    }
 }

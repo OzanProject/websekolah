@@ -28,4 +28,16 @@ class ContactMessageController extends Controller
         $message->delete();
         return redirect()->route('admin.messages.index')->with('success', 'Pesan berhasil dihapus');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:contact_messages,id',
+        ]);
+
+        ContactMessage::whereIn('id', $request->ids)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Pesan terpilih berhasil dihapus.']);
+    }
 }

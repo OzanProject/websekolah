@@ -105,11 +105,13 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('pages', \App\Http\Controllers\Admin\PageController::class)->except(['show']);
 
     // Testimoni (Testimonials)
+    Route::post('testimonials/bulk-destroy', [\App\Http\Controllers\Admin\TestimonialController::class, 'bulkDestroy'])->name('testimonials.bulkDestroy');
     Route::post('testimonials/import', [\App\Http\Controllers\Admin\TestimonialController::class, 'import'])->name('testimonials.import');
     Route::get('testimonials/template', [\App\Http\Controllers\Admin\TestimonialController::class, 'downloadTemplate'])->name('testimonials.template');
     Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
 
     // Pesan Kontak
+    Route::post('messages/bulk-destroy', [\App\Http\Controllers\Admin\ContactMessageController::class, 'bulkDestroy'])->name('messages.bulkDestroy');
     Route::resource('messages', \App\Http\Controllers\Admin\ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
     // Users (Administrator)
@@ -126,6 +128,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::put('settings/ppdb', [\App\Http\Controllers\Admin\PpdbSettingController::class, 'update'])->name('settings.ppdb.update');
 
     // Data Pendaftar PPDB
+    Route::post('ppdb/bulk-destroy', [\App\Http\Controllers\Admin\PpdbController::class, 'bulkDestroy'])->name('ppdb.bulkDestroy');
     Route::resource('ppdb', \App\Http\Controllers\Admin\PpdbController::class)->only(['index', 'show', 'destroy']);
     Route::put('ppdb/{id}/status', [\App\Http\Controllers\Admin\PpdbController::class, 'updateStatus'])->name('ppdb.status.update');
 
