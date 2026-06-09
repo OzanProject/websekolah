@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4" data-testid="sambutan-actions">
-                    <a href="#about" class="inline-flex items-center justify-center bg-[#1E3A8A] hover:bg-[#1E40AF] text-white font-semibold rounded-lg px-8 h-12 transition">
+                    <a href="{{ url('/profil') }}" class="inline-flex items-center justify-center bg-[#1E3A8A] hover:bg-[#1E40AF] text-white font-semibold rounded-lg px-8 h-12 transition">
                         Lebih Lanjut <x-lucide-arrow-right class="w-4 h-4 ml-2" />
                     </a>
                 </div>
