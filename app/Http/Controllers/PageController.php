@@ -66,6 +66,21 @@ class PageController extends Controller
         return view('pages.fasilitas', compact('facilities'));
     }
 
+    public function ekstrakurikuler()
+    {
+        $extracurricularItems = \App\Models\Extracurricular::all();
+        $extracurriculars = $extracurricularItems->map(function($item) {
+            return [
+                'name' => $item->name,
+                'desc' => $item->description,
+                'icon' => $item->icon ?: 'activity',
+                'image' => $item->image_path ? (filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path)) : null,
+            ];
+        })->toArray();
+
+        return view('pages.ekstrakurikuler', compact('extracurriculars'));
+    }
+
     public function kontak()
     {
         $profile = \App\Models\SchoolProfile::first();

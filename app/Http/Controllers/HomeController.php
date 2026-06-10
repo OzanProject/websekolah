@@ -9,16 +9,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Data Berita (Dari Database)
         $latestNews = News::with(['category', 'author'])->orderBy('date', 'desc')->take(3)->get();
-
-        // Data Program Unggulan (Dari Database)
         $programs = \App\Models\Program::all();
+        $video = \App\Models\Video::where('is_active', true)->first();
+        $profile = \App\Models\SchoolProfile::first();
 
-        // Data Agenda (Dari Database)
-        $agendaItems = \App\Models\Agenda::orderBy('date', 'asc')->take(4)->get();
-        // Transform the date for the view
-        $agenda = $agendaItems->map(function($item) {
+        $agenda = $this->getAgenda();
+        $gallery = $this->getGallery();
+        $facilities = $this->getFacilities();
+        $testimonials = $this->getTestimonials();
+        $extracurriculars = $this->getExtracurriculars();
+
+        return view('pages.home', compact('latestNews', 'programs', 'agenda', 'gallery', 'facilities', 'testimonials', 'video', 'profile', 'extracurriculars'));
+    }
+
+    private function getAgenda()
+    {
+        return \App\Models\Agenda::orderBy('date', 'asc')->take(4)->get()->map(function($item) {
             $date = \Carbon\Carbon::parse($item->date);
             return [
                 'title' => $item->title,
@@ -29,30 +36,33 @@ class HomeController extends Controller
                 'location' => $item->location,
             ];
         })->toArray();
+    }
 
-        // Data Galeri (Dari Database)
-        $galleryItems = \App\Models\Gallery::take(6)->get();
-        $gallery = $galleryItems->map(function($item) {
+    private function getGallery()
+    {
+        return \App\Models\Gallery::take(6)->get()->map(function($item) {
             return [
                 'src' => filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path),
                 'title' => $item->title
             ];
         })->toArray();
+    }
 
-        // Data Fasilitas (Dari Database)
-        $facilityItems = \App\Models\Facility::take(6)->get();
-        $facilities = $facilityItems->map(function($item) {
+    private function getFacilities()
+    {
+        return \App\Models\Facility::take(3)->get()->map(function($item) {
             return [
                 'title' => $item->title,
                 'desc' => $item->description,
-                'icon' => $item->icon ?: 'building-2', // Use db icon or default
+                'icon' => $item->icon ?: 'building-2',
                 'image' => filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path),
             ];
         })->toArray();
+    }
 
-        // Data Testimoni (Dari Database)
-        $testimonialItems = \App\Models\Testimonial::take(6)->get();
-        $testimonials = $testimonialItems->map(function($item) {
+    private function getTestimonials()
+    {
+        return \App\Models\Testimonial::take(6)->get()->map(function($item) {
             return [
                 'quote' => $item->quote,
                 'name' => $item->name,
@@ -60,10 +70,17 @@ class HomeController extends Controller
                 'avatar' => $item->avatar_path ? (filter_var($item->avatar_path, FILTER_VALIDATE_URL) ? $item->avatar_path : asset('storage/' . $item->avatar_path)) : 'https://ui-avatars.com/api/?name='.urlencode($item->name).'&background=random',
             ];
         })->toArray();
+    }
 
-        $video = \App\Models\Video::where('is_active', true)->first();
-        $profile = \App\Models\SchoolProfile::first();
-
-        return view('pages.home', compact('latestNews', 'programs', 'agenda', 'gallery', 'facilities', 'testimonials', 'video', 'profile'));
+    private function getExtracurriculars()
+    {
+        return \App\Models\Extracurricular::take(6)->get()->map(function($item) {
+            return [
+                'name' => $item->name,
+                'desc' => $item->description,
+                'icon' => $item->icon ?: 'activity', 
+                'image' => $item->image_path ? (filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path)) : null,
+            ];
+        })->toArray();
     }
 }

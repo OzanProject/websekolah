@@ -29,8 +29,8 @@
                 </li>
 
                 {{-- INFORMASI SEKOLAH --}}
-                <li class="nav-item {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') ? 'active' : '' }}">
+                <li class="nav-item {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') || Request::is('admin/extracurriculars*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') || Request::is('admin/extracurriculars*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-info-circle"></i>
                         <p>
                             INFORMASI SEKOLAH
@@ -60,6 +60,12 @@
                             <a href="{{ route('admin.facilities.index') }}" class="nav-link {{ Request::is('admin/facilities*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Fasilitas</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.extracurriculars.index') }}" class="nav-link {{ Request::is('admin/extracurriculars*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ekstrakurikuler</p>
                             </a>
                         </li>
                     </ul>

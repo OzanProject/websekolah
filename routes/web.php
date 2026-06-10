@@ -12,6 +12,7 @@ Route::get('/program', [PageController::class, 'program']);
 Route::get('/galeri', [PageController::class, 'galeri']);
 Route::get('/agenda', [PageController::class, 'agenda']);
 Route::get('/fasilitas', [PageController::class, 'fasilitas']);
+Route::get('/ekstrakurikuler', [PageController::class, 'ekstrakurikuler']);
 Route::get('/kontak', [PageController::class, 'kontak']);
 
 $ppdbSlug = 'pendaftaran';
@@ -82,6 +83,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 
     // Fasilitas (Facilities)
     Route::post('facilities/bulk-destroy', [\App\Http\Controllers\Admin\FacilityController::class, 'bulkDestroy'])->name('facilities.bulkDestroy');
+    Route::resource('extracurriculars', \App\Http\Controllers\Admin\ExtracurricularController::class);
+    Route::post('extracurriculars/bulk-destroy', [\App\Http\Controllers\Admin\ExtracurricularController::class, 'bulkDestroy'])->name('extracurriculars.bulkDestroy');
     Route::post('facilities/import', [\App\Http\Controllers\Admin\FacilityController::class, 'import'])->name('facilities.import');
     Route::get('facilities/template', [\App\Http\Controllers\Admin\FacilityController::class, 'downloadTemplate'])->name('facilities.template');
     Route::resource('facilities', \App\Http\Controllers\Admin\FacilityController::class);
