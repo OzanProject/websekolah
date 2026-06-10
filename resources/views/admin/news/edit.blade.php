@@ -68,7 +68,37 @@
             toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code media table',
             height: 400,
             valid_elements: '*[*]',
-            images_upload_url: '{{ route("admin.upload.tinymce") }}',
+            images_upload_handler: function (blobInfo, progress) {
+                return new Promise(function(resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', '/admin/upload/tinymce');
+                    xhr.setRequestHeader("X-CSRF-Token", '{{ csrf_token() }}');
+                    
+                    xhr.onload = function() {
+                        if (xhr.status === 403 || xhr.status === 419) {
+                            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+                            return;
+                        }
+                        if (xhr.status < 200 || xhr.status >= 300) {
+                            reject('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+                        var json = JSON.parse(xhr.responseText);
+                        if (!json || typeof json.location != 'string') {
+                            reject('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        resolve(json.location);
+                    };
+                    xhr.onerror = function () {
+                        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+                    };
+                    var formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    xhr.send(formData);
+                });
+            },
             automatic_uploads: true,
             file_picker_types: 'image media file',
             file_picker_callback: function (cb, value, meta) {
@@ -86,7 +116,7 @@
                     var formData = new FormData();
                     formData.append('file', file);
                     formData.append('_token', '{{ csrf_token() }}');
-                    fetch('{{ route("admin.upload.tinymce") }}', { method: 'POST', body: formData })
+                    fetch('/admin/upload/tinymce', { method: 'POST', body: formData })
                     .then(response => response.json())
                     .then(data => {
                         if (data.location) {
