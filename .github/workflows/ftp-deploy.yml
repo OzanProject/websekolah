@@ -1,0 +1,39 @@
+name: Deploy to cPanel via FTP
+
+on:
+  push:
+    branches:
+      - main # Ini akan berjalan otomatis saat Anda melakukan 'git push' ke branch main
+
+jobs:
+  web-deploy:
+    name: 🚀 Deploy via FTP
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚚 Mengambil kode terbaru (Checkout)
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+    
+    - name: 📂 Sinkronisasi file ke cPanel via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Jika file website Anda berada di folder tertentu (misal public_html/websekolah/), ubah ./ di bawah ini.
+        # Jika folder FTP akun tersebut sudah langsung mengarah ke websekolah, biarkan ./
+        server-dir: ./ 
+        
+        # Mengecualikan file/folder ini agar tidak ikut di-upload (menghemat waktu FTP)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/vendor/**
+          .env
+          .env.example
+          README.md
+          phpunit.xml
+          tests/**
