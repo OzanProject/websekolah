@@ -22,6 +22,11 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        
+        # Tambahan konfigurasi untuk mengatasi ECONNRESET di cPanel:
+        protocol: ftp
+        port: 21
+        
         # Jika file website Anda berada di folder tertentu (misal public_html/websekolah/), ubah ./ di bawah ini.
         # Jika folder FTP akun tersebut sudah langsung mengarah ke websekolah, biarkan ./
         server-dir: ./ 
