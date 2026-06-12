@@ -8,6 +8,43 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap4.min.css">
     
+    <style>
+        /* Global Mobile Fixes for AdminLTE */
+        @media (max-width: 768px) {
+            .content-header .d-flex.justify-content-between {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            .content-header .d-flex.justify-content-between > h1 {
+                margin-bottom: 15px !important;
+                text-align: center;
+                font-size: 1.5rem;
+            }
+            .content-header .d-flex.justify-content-between > div {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            .content-header .d-flex.justify-content-between > div .btn {
+                width: 100%;
+                margin-right: 0 !important;
+            }
+            .content-header .d-flex.justify-content-between > div form {
+                width: 100%;
+                margin: 0;
+            }
+            .content-header .d-flex.justify-content-between > div form .btn {
+                width: 100%;
+            }
+        }
+
+        /* Prevent Action buttons from wrapping in tables */
+        .table td:last-child, .table th:last-child {
+            white-space: nowrap;
+            width: 1%;
+        }
+    </style>
     @stack('css')
     @yield('css')
 @stop
