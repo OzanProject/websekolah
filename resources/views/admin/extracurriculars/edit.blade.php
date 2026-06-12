@@ -79,10 +79,13 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            bsCustomFileInput.init();
-            
-            // Image Preview
+            // Menampilkan nama file dan image preview
             $("#image").change(function() {
+                // Menampilkan nama file di label
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+                
+                // Menampilkan preview gambar
                 if (this.files && this.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
