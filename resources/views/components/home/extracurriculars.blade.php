@@ -15,35 +15,37 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($extracurriculars as $i => $e)
-            <div class="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer bg-white" data-testid="extracurricular-{{ $i }}">
-                {{-- Foto Latar Belakang --}}
-                <div class="aspect-[4/5] overflow-hidden w-full h-full relative">
+            <div class="group flex flex-col bg-white rounded-2xl border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" data-testid="extracurricular-{{ $i }}">
+                {{-- Foto Landscape --}}
+                <div class="aspect-video w-full overflow-hidden relative bg-slate-100">
                     @if($e['image'])
-                        <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     @else
-                        <div class="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-50 flex items-center justify-center">
-                            <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-24 h-24 text-blue-200" />
+                        <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+                            <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-16 h-16 text-blue-200" />
                         </div>
                     @endif
-                    
-                    {{-- Overlay Gradasi Gelap di Bawah --}}
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-300"></div>
                 </div>
 
                 {{-- Konten Text dan Icon --}}
-                <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <div class="flex items-center gap-4 mb-3">
-                        <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white group-hover:bg-blue-600 group-hover:border-blue-600 transition-colors duration-300">
+                <div class="flex flex-col flex-grow p-6 sm:p-7">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50/80 text-[#1E3A8A] flex items-center justify-center group-hover:bg-[#1E3A8A] group-hover:text-white transition-colors duration-300 shrink-0">
                             <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-6 h-6" />
                         </div>
-                        <h3 class="text-2xl font-bold text-white">{{ $e['name'] }}</h3>
+                        <h3 class="text-xl font-bold text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors line-clamp-1">{{ $e['name'] }}</h3>
                     </div>
                     
-                    {{-- Deskripsi muncul saat hover --}}
-                    <div class="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out">
-                        <p class="text-white/80 text-sm leading-relaxed mt-2 border-t border-white/20 pt-3">
-                            {{ $e['desc'] }}
-                        </p>
+                    {{-- Deskripsi Selalu Tampil --}}
+                    <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
+                        {{ $e['desc'] }}
+                    </p>
+                    
+                    {{-- Aksi --}}
+                    <div class="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-semibold text-[#1E3A8A] group-hover:text-[#1E40AF]">
+                        <span>Selengkapnya</span>
+                        <x-lucide-arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </div>
                 </div>
             </div>
