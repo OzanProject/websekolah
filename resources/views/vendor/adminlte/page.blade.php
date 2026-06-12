@@ -69,6 +69,26 @@
         }
 
         $(document).ready(function() {
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{!! addslashes(session('success')) !!}',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            @endif
+
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{!! addslashes(session('error')) !!}',
+                    timer: 4000,
+                    showConfirmButton: false
+                });
+            @endif
+
             attachSwalToForms();
 
             // Re-attach for DataTables events
