@@ -47,16 +47,11 @@ class GeneralSettingController extends Controller
             'school_nss', 
             'school_accreditation',
             'tinymce_api_key',
-            'ppdb_title',
-            'ppdb_year',
-            'ppdb_description',
             'hero_btn1_text',
             'hero_btn1_url',
             'hero_btn2_text',
             'hero_btn2_url',
         ]);
-        
-        $data['ppdb_active'] = $request->has('ppdb_active');
 
         if ($request->hasFile('school_logo')) {
             // Hapus logo lama jika ada
