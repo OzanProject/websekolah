@@ -24,7 +24,11 @@
                 </div>
                 <div class="relative">
                     <div class="w-14 h-14 rounded-xl bg-[#EFF6FF] flex items-center justify-center mb-5 group-hover:bg-[#1E3A8A] transition-colors">
-                        <x-dynamic-component :component="'lucide-' . ($p['icon'] ?: 'book-open')" class="w-7 h-7 text-[#1E3A8A] group-hover:text-white transition-colors" stroke-width="2" />
+                        @if(str_contains($p['icon'], 'fa-'))
+                            <i class="{{ $p['icon'] }} text-[#1E3A8A] group-hover:text-white transition-colors text-2xl"></i>
+                        @else
+                            <x-dynamic-component :component="'lucide-' . ($p['icon'] ?: 'book-open')" class="w-7 h-7 text-[#1E3A8A] group-hover:text-white transition-colors" stroke-width="2" />
+                        @endif
                     </div>
                     <h3 class="text-lg font-bold text-[#0F172A] mb-2">{{ $p['title'] }}</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">{{ $p['description'] }}</p>

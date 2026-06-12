@@ -22,9 +22,13 @@
                 </div>
                 <div class="p-6">
                     <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#EFF6FF] group-hover:bg-[#1E3A8A] flex items-center justify-center transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-[#1E3A8A] transition-colors duration-300">
+                        @if(str_contains($f['icon'], 'fa-'))
+                            <i class="{{ $f['icon'] }} text-[#1E3A8A] group-hover:text-white transition-colors text-xl"></i>
+                        @else
                             <x-dynamic-component :component="'lucide-' . ($f['icon'] ?: 'building-2')" class="w-6 h-6 text-[#1E3A8A] group-hover:text-white transition-colors" />
-                        </div>
+                        @endif
+                    </div>
                         <div class="flex-1">
                             <h3 class="text-lg font-bold text-[#0F172A] mb-1.5">{{ $f['title'] }}</h3>
                             <p class="text-sm text-slate-600 leading-relaxed">{{ $f['desc'] }}</p>

@@ -22,8 +22,12 @@
                         @if($e['image'])
                             <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         @else
-                            <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
-                                <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-16 h-16 text-blue-200" />
+                            <div class="absolute right-0 top-0 opacity-[0.03] transform translate-x-4 -translate-y-4 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12">
+                                @if(str_contains($e['icon'], 'fa-'))
+                                    <i class="{{ $e['icon'] }} text-blue-200" style="font-size: 4rem;"></i>
+                                @else
+                                    <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-16 h-16 text-blue-200" />
+                                @endif
                             </div>
                         @endif
                         <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-300"></div>
@@ -39,8 +43,12 @@
                     {{-- Konten Text dan Icon --}}
                     <div class="flex flex-col flex-grow p-6 sm:p-7">
                         <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-blue-50/80 text-[#1E3A8A] flex items-center justify-center group-hover:bg-[#1E3A8A] group-hover:text-white transition-colors duration-300 shrink-0">
-                                <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-6 h-6" />
+                            <div class="w-12 h-12 rounded-xl bg-[#EFF6FF] text-[#1E3A8A] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm relative z-10">
+                                @if(str_contains($e['icon'], 'fa-'))
+                                    <i class="{{ $e['icon'] }} text-xl"></i>
+                                @else
+                                    <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-6 h-6" />
+                                @endif
                             </div>
                             <h3 class="text-xl font-bold text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors line-clamp-1">{{ $e['name'] }}</h3>
                         </div>
@@ -72,16 +80,24 @@
                             @if($e['image'])
                                 <img src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-64 sm:h-96 object-cover bg-slate-100 shrink-0" />
                             @else
-                                <div class="w-full h-64 sm:h-96 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center shrink-0">
-                                    <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-32 h-32 text-blue-200" />
+                                <div class="absolute right-0 top-0 opacity-10 transform translate-x-10 -translate-y-10">
+                                    @if(str_contains($e['icon'], 'fa-'))
+                                        <i class="{{ $e['icon'] }} text-blue-200" style="font-size: 8rem;"></i>
+                                    @else
+                                        <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-32 h-32 text-blue-200" />
+                                    @endif
                                 </div>
                             @endif
                             
                             {{-- Konten Detail --}}
                             <div class="p-6 sm:p-10 overflow-y-auto">
                                 <div class="flex items-center gap-4 mb-6">
-                                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-[#1E3A8A] flex items-center justify-center shrink-0 shadow-inner">
-                                        <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-7 h-7" />
+                                    <div class="w-14 h-14 rounded-2xl bg-white text-[#1E3A8A] flex items-center justify-center shadow-md">
+                                        @if(str_contains($e['icon'], 'fa-'))
+                                            <i class="{{ $e['icon'] }} text-2xl"></i>
+                                        @else
+                                            <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-7 h-7" />
+                                        @endif
                                     </div>
                                     <h3 class="text-2xl sm:text-3xl font-bold text-[#0F172A]">{{ $e['name'] }}</h3>
                                 </div>
