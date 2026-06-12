@@ -18,7 +18,7 @@
                 <div class="icon">
                     <i class="fas fa-user-graduate"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.ppdb.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="card-footer clearfix">
-                    <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Lihat Semua PPDB</a>
+                    <a href="{{ route('admin.ppdb.index') }}" class="btn btn-sm btn-secondary float-right">Lihat Semua PPDB</a>
                 </div>
             </div>
         </section>
@@ -146,7 +146,7 @@
                         <li class="item">
                             <div class="product-img">
                                 @if($news->image)
-                                    <img src="{{ asset('storage/' . $news->image) }}" alt="News Image" class="img-size-50">
+                                    <img src="{{ Storage::url($news->image) }}" alt="News Image" class="img-size-50">
                                 @else
                                     <img src="/vendor/adminlte/dist/img/default-150x150.png" alt="News Image" class="img-size-50">
                                 @endif
