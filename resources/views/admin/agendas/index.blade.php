@@ -124,7 +124,7 @@
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
-                "responsive": true,
+                "responsive": false,
                 "columnDefs": [
                     { "orderable": false, "targets": [0, 6] } // Disable ordering on checkbox and action columns
                 ],

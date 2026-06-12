@@ -109,7 +109,7 @@
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
-                "responsive": true,
+                "responsive": false,
                 "columnDefs": [
                     { "orderable": false, "targets": [0, 2, 6] } 
                 ],
