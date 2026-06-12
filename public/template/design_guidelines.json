@@ -1,0 +1,118 @@
+{
+  "theme": "Light",
+  "archetype": "4 (Swiss & High-Contrast) adapted for Professional School",
+  "design_philosophy": "A clean, modern, and trustworthy school landing page inspired by government/school CMS standards, but elevated with 2026 UI trends. It uses a strong Navy Blue palette representing formal education, paired with generous spacing, bento-grid layouts, and clear information hierarchy. It strictly avoids generic purple gradients and instead relies on crisp typography, solid colors, and high-quality imagery to build trust.",
+  "colors": {
+    "primary": "#1E3A8A",
+    "primary_hover": "#1E40AF",
+    "primary_light": "#EFF6FF",
+    "accent": "#F59E0B",
+    "accent_hover": "#D97706",
+    "background": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "text_main": "#0F172A",
+    "text_muted": "#64748B",
+    "border": "#E2E8F0"
+  },
+  "typography": {
+    "heading_font": "Outfit, sans-serif",
+    "body_font": "Manrope, sans-serif",
+    "hierarchy": {
+      "h1": "text-4xl md:text-5xl lg:text-6xl tracking-tight font-bold text-slate-900",
+      "h2": "text-3xl md:text-4xl tracking-tight font-bold text-slate-900",
+      "h3": "text-xl md:text-2xl font-semibold text-slate-900",
+      "body": "text-base leading-relaxed text-slate-600",
+      "small": "text-sm text-slate-500"
+    }
+  },
+  "layout_spacing": {
+    "section_padding": "py-16 md:py-24",
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "gap_standard": "gap-6 md:gap-8",
+    "border_radius": "rounded-xl"
+  },
+  "components": {
+    "buttons": "Use Shadcn Button. Primary: bg-[#1E3A8A] text-white hover:bg-[#1E40AF] rounded-lg. Accent: bg-[#F59E0B] text-white hover:bg-[#D97706] rounded-lg. Outline: border-2 border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#EFF6FF].",
+    "cards": "bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200",
+    "tabs": "Shadcn Tabs. Styled clearly with active state having a navy blue bottom border or pill background.",
+    "inputs": "Shadcn Input, rounded-lg, focus-visible:ring-[#1E3A8A]",
+    "icons": "lucide-react, size appropriately (e.g., w-6 h-6 for standard, w-8 h-8 for featured icons), color: text-[#1E3A8A]"
+  },
+  "sections": [
+    {
+      "name": "Navbar",
+      "details": "Sticky top, glassmorphism `bg-white/90 backdrop-blur-md border-b border-slate-200`. Logo on left. Navigation links center (Profil, Informasi, Galeri, Interaksi). 'Daftar PPDB' CTA button on right. Mobile hamburger menu."
+    },
+    {
+      "name": "Hero Banner",
+      "details": "Full width relative container (h-[80vh] min-h-[600px]). Background image of school building with `bg-slate-900/60` dark overlay for contrast. Center-aligned text. H1: 'Selamat Datang di SMP Negeri 4 Kadupandak'. Subtitle describing the school's mission. Two buttons: 'PPDB Online' (Accent color) and 'Profil Sekolah' (White outline)."
+    },
+    {
+      "name": "Quick Info Grid",
+      "details": "Bento-style grid overlapping the bottom of the hero section or immediately below. 6-8 items: Layanan, PPDB, Agenda, Bank Data, Pegawai, Struktur, Visi Misi. Each item is a clickable card with an icon, title, and subtle hover effect (`hover:-translate-y-1`)."
+    },
+    {
+      "name": "Sambutan Kepala Sekolah",
+      "details": "Split layout (grid-cols-1 md:grid-cols-2). Left: Professional portrait of Kepala Sekolah in a rounded rectangle with subtle decorative background shape. Right: 'Sambutan Kepala Sekolah' heading, name 'Bapak Kepala Sekolah, S.Pd', and quote/message."
+    },
+    {
+      "name": "Stats Counter (Mengapa Memilih Kami)",
+      "details": "Full-width section with Navy Blue background (`bg-[#1E3A8A]`). 4 columns: Jumlah Siswa, Guru & Staf, Kelas, Prestasi. Large numbers in Accent/White color, descriptive text below. Use lucide icons."
+    },
+    {
+      "name": "News & Updates (Berita)",
+      "details": "3-column grid of news cards. Each card has an image on top with an absolute positioned Date Badge (e.g., '25 Mar' in a white box) overlapping the image corner. Title, short excerpt, and 'Baca Selengkapnya' link."
+    },
+    {
+      "name": "Tabs Section (Keunggulan, Penghargaan, Legalitas, Ekstrakurikuler)",
+      "details": "Using Shadcn Tabs component. Provide 4 tabs. Inside each tab, present information in a structured list with check icons or a grid format."
+    },
+    {
+      "name": "Agenda Kegiatan",
+      "details": "List view of upcoming events. Each list item has a left-aligned distinct Date Badge (Day number large, Month short, e.g., '30 JUN' with gray bg and navy text). Right side contains Event Title, Time, and Location."
+    },
+    {
+      "name": "Galeri Foto",
+      "details": "CSS Grid (grid-cols-2 md:grid-cols-4). Gapless or small gap grid of photos. `overflow-hidden rounded-xl` on container. Hover effect: image scales up slightly (`hover:scale-105`) with a dark gradient overlay."
+    },
+    {
+      "name": "Video Profil",
+      "details": "Large 16:9 container with a thumbnail image. Dark overlay. Center-aligned large Play button (lucide Play icon inside a white glassmorphism circle). Text below 'Tonton Video Profil Kami'."
+    },
+    {
+      "name": "Fasilitas",
+      "details": "3-column grid of cards showcasing school facilities (Perpustakaan, Lab Komputer, Lapangan Olahraga, Tempat Ibadah). Image top, Title bottom."
+    },
+    {
+      "name": "Testimoni",
+      "details": "Grid of cards (grid-cols-1 md:grid-cols-3). Quote icon at top, feedback text, student/parent name, and role."
+    },
+    {
+      "name": "PPDB CTA Section",
+      "details": "High-contrast section (Light blue `bg-[#EFF6FF]` or Navy). Large heading 'Penerimaan Peserta Didik Baru Tahun Ajaran 2026/2027'. 'Daftar Sekarang' button."
+    },
+    {
+      "name": "Contact & Map",
+      "details": "Split layout. Left: Contact Information (Alamat, Telepon, Email) with icons + Simple Contact Form. Right: Placeholder iframe for Google Maps (use a gray box if iframe not available)."
+    },
+    {
+      "name": "Footer",
+      "details": "Dark Navy background (`bg-slate-900`). 4 columns: Brand info & Logo, Link Terkait (Kemdikbud, Dinas Pendidikan), Navigasi Cepat, Kontak & Sosmed. Copyright text at bottom border."
+    }
+  ],
+  "media_urls": {
+    "hero_bg": "https://images.pexels.com/photos/18145430/pexels-photo-18145430.jpeg",
+    "kepsek_portrait": "https://images.pexels.com/photos/10816007/pexels-photo-10816007.jpeg",
+    "news_1": "https://images.pexels.com/photos/32279016/pexels-photo-32279016.jpeg",
+    "news_2": "https://images.unsplash.com/photo-1660128359946-5d09e282a8a7",
+    "news_3": "https://images.unsplash.com/photo-1514369118554-e20d93546b30",
+    "gallery_1": "https://images.pexels.com/photos/32279024/pexels-photo-32279024.jpeg",
+    "gallery_2": "https://images.unsplash.com/photo-1514355315815-2b64b0216b14",
+    "gallery_3": "https://images.pexels.com/photos/35551010/pexels-photo-35551010.jpeg",
+    "gallery_4": "https://images.pexels.com/photos/35550999/pexels-photo-35550999.jpeg",
+    "video_thumbnail": "https://images.pexels.com/photos/18145430/pexels-photo-18145430.jpeg",
+    "facilities_library": "https://images.pexels.com/photos/35550999/pexels-photo-35550999.jpeg",
+    "facilities_lab": "https://images.pexels.com/photos/35551010/pexels-photo-35551010.jpeg"
+  },
+  "testing_rules": "All interactive and key informational elements MUST include a `data-testid` attribute in kebab-case format based on their role (e.g., `data-testid=\"hero-ppdb-button\"`, `data-testid=\"nav-profil-link\"`)."
+}

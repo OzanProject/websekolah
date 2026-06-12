@@ -1,0 +1,29 @@
+{
+  "summary": "Completed E2E frontend testing of new SMPN 4 Kadupandak features: BeritaList (/berita), BeritaDetail (/berita/:id), and FloatingWA widget. 34/35 critical UI flows passed. The only failure (FloatingWA card not opening via Playwright force-click on /ppdb at viewport bottom-right corner) is an Emergent preview-environment artifact: the 'Made with Emergent' badge is positioned at the exact same fixed bottom-right coordinates as the FloatingWA button and intercepts the click at that pixel location. The FloatingWA component itself is functionally correct — verified via direct JS click (card opens, close button works, wa.me/6282260101234 deep-link with default Bahasa Indonesia message generated correctly).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "All pages (preview env only)", "issues": ["FloatingWA button (bottom-right, fixed bottom-5 right-5) visually overlaps with the Emergent preview 'Made with Emergent' badge which sits at the same corner. In the preview env, the badge anchor intercepts pointer events at that location. Not a code bug, will not occur in production deploy. Consider nudging FloatingWA up (e.g. bottom-20 right-5) ONLY if Emergent badge is expected to remain in production previews."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "FloatingWA: setVisible delay (1500ms) controls opacity/scale but the button is still in the DOM and clickable from t=0. If the intent is to defer interactivity, also gate pointer-events (pointer-events-none until visible).",
+    "BeritaList: filter bar uses sticky top-[64px] lg:top-[80px] — matches Navbar heights but is hardcoded; consider CSS variable for maintainability.",
+    "BeritaDetail: useEffect resets document.title but if user navigates between two detail routes quickly the prevTitle captured on first mount becomes the title of the *previous article* (since component re-renders, not remounts, on param change with same route). Minor; current React-Router behavior with key=undefined still works because effect dep is [article] and runs on each article change, but the title-reset on unmount uses the prevTitle captured during the LAST effect run, not the original. Acceptable for this static site.",
+    "BeritaDetail share buttons use window.location.href captured at render time — fine for client-side but won't update if URL changes without remount.",
+    "siteData.NEWS has only 4 articles; with 3 'related' filtered (id !== current) the sidebar will always show the same 3 — works but adds redundancy with the main grid on small datasets.",
+    "Navbar items appear to no longer expose 'data-testid=nav-item-*' attributes (evaluate returned empty list). iteration_1 documented this pattern; if Navbar was refactored, consider re-adding testids for testability. Berita link still works via href='/berita'."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (static frontend)", "frontend": "97% (34/35; the 1 failure is an Emergent preview overlay artifact, not an app bug — FloatingWA verified functional via JS-dispatched click)"},
+  "test_credentials": "none required",
+  "seed_data_creation": "none (frontend-only, NEWS data hardcoded in /app/frontend/src/lib/siteData.js)",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All new features (BeritaList with search/category filter, BeritaDetail with share buttons + related news + sidebar PPDB CTA, FloatingWA widget on Home/Berita/BeritaDetail/PPDB) work as specified. Dynamic <title> updates verified for both /berita and /berita/[slug]. Invalid slug correctly redirects (<Navigate replace>) to /berita. Client-side routing (no full page reloads) confirmed. siteData.NEWS has 4 items: 1 Prestasi, 2 Pengumuman, 1 Kegiatan. Featured = first filtered item; remaining go in grid (so /berita default view: 1 featured + 3 grid cards). Detail page URL pattern accepts both slug and numeric id (NEWS.find by slug OR id). Floating WA chat link: https://wa.me/6282260101234?text=<Bahasa Indonesia default message>. Important: When testing FloatingWA via Playwright, the Emergent 'Made with Emergent' badge intercepts clicks at bottom-right; bypass via page.evaluate(\"document.querySelector('[data-testid=\\\"floating-wa-btn\\\"]').click()\") instead of page.click(). Verified flows in this iteration: home news cards nav, 'Lihat Semua Berita' button nav, /berita search + category filter, featured/grid card nav, detail page rendering, share buttons present, sidebar PPDB CTA nav, related news nav, invalid slug redirect, FloatingWA appearance + card toggle + wa.me link, dynamic doc title, navbar Berita anchor, back-to-berita link, breadcrumb home/berita links.",
+  "rca of the issue": "FloatingWA card not opening via Playwright click on /ppdb: at bottom-right viewport corner (1844,1004 → 1900,1060 with viewport 1920x1080), document.elementFromPoint returns an <A> tag (the Emergent preview 'Made with Emergent' badge anchor) instead of the FloatingWA button. force=True bypasses Playwright's actionability checks but the dispatched click still hits whatever sits on top at that location. Mitigation: bypass via JS click (verified working) or shift FloatingWA position (e.g., bottom-24 on Emergent preview). NOT an app bug — production deploy without the preview badge will have no overlap."
+}
