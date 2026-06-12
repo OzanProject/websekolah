@@ -32,47 +32,49 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="usersTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 50px">No</th>
-                        <th>Nama</th>
-                        <th>Email</th>
-                        <th>Tanggal Terdaftar</th>
-                        <th style="width: 150px" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $index => $item)
+            <div class="table-responsive">
+                <table id="usersTable" class="table table-bordered table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode($item->name) }}&background=random&size=30" class="img-circle mr-2" alt="Avatar">
-                                <strong>{{ $item->name }}</strong>
-                                @if(auth()->id() === $item->id)
-                                    <span class="badge badge-success ml-2">Anda</span>
-                                @endif
-                            </td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->created_at->format('d M Y') }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                @if(auth()->id() !== $item->id && $users->count() > 1)
-                                <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus admin ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                                @endif
-                            </td>
+                            <th style="width: 50px">No</th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Tanggal Terdaftar</th>
+                            <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $index => $item)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($item->name) }}&background=random&size=30" class="img-circle mr-2" alt="Avatar">
+                                    <strong>{{ $item->name }}</strong>
+                                    @if(auth()->id() === $item->id)
+                                        <span class="badge badge-success ml-2">Anda</span>
+                                    @endif
+                                </td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->created_at->format('d M Y') }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    @if(auth()->id() !== $item->id && $users->count() > 1)
+                                    <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus admin ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

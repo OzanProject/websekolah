@@ -35,53 +35,55 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="testimonialsTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 40px" class="text-center">
-                            <input type="checkbox" id="checkAll">
-                        </th>
-                        <th style="width: 50px">No</th>
-                        <th style="width: 80px">Avatar</th>
-                        <th>Nama</th>
-                        <th>Peran (Role)</th>
-                        <th>Kutipan</th>
-                        <th style="width: 150px" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($testimonials as $index => $item)
+            <div class="table-responsive">
+                <table id="testimonialsTable" class="table table-bordered table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td class="text-center">
-                                <input type="checkbox" class="checkItem" value="{{ $item->id }}">
-                            </td>
-                            <td>{{ $index + 1 }}</td>
-                            <td class="text-center">
-                                @if($item->avatar_path)
-                                    <img src="{{ filter_var($item->avatar_path, FILTER_VALIDATE_URL) ? $item->avatar_path : Storage::url($item->avatar_path) }}" alt="{{ $item->name }}" class="img-circle img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
-                                @else
-                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($item->name) }}&background=random" alt="{{ $item->name }}" class="img-circle img-thumbnail" style="width: 50px; height: 50px;">
-                                @endif
-                            </td>
-                            <td><strong>{{ $item->name }}</strong></td>
-                            <td><span class="badge badge-info">{{ $item->role }}</span></td>
-                            <td><i>"{{ Str::limit($item->quote, 50) }}"</i></td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.testimonials.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.testimonials.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus testimoni ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th style="width: 40px" class="text-center">
+                                <input type="checkbox" id="checkAll">
+                            </th>
+                            <th style="width: 50px">No</th>
+                            <th style="width: 80px">Avatar</th>
+                            <th>Nama</th>
+                            <th>Peran (Role)</th>
+                            <th>Kutipan</th>
+                            <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($testimonials as $index => $item)
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" class="checkItem" value="{{ $item->id }}">
+                                </td>
+                                <td>{{ $index + 1 }}</td>
+                                <td class="text-center">
+                                    @if($item->avatar_path)
+                                        <img src="{{ filter_var($item->avatar_path, FILTER_VALIDATE_URL) ? $item->avatar_path : Storage::url($item->avatar_path) }}" alt="{{ $item->name }}" class="img-circle img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                    @else
+                                        <img src="https://ui-avatars.com/api/?name={{ urlencode($item->name) }}&background=random" alt="{{ $item->name }}" class="img-circle img-thumbnail" style="width: 50px; height: 50px;">
+                                    @endif
+                                </td>
+                                <td><strong>{{ $item->name }}</strong></td>
+                                <td><span class="badge badge-info">{{ $item->role }}</span></td>
+                                <td><i>"{{ Str::limit($item->quote, 50) }}"</i></td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.testimonials.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.testimonials.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus testimoni ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
