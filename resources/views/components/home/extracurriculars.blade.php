@@ -15,39 +15,83 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($extracurriculars as $i => $e)
-            <div class="group flex flex-col bg-white rounded-2xl border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" data-testid="extracurricular-{{ $i }}">
-                {{-- Foto Landscape --}}
-                <div class="aspect-video w-full overflow-hidden relative bg-slate-100">
-                    @if($e['image'])
-                        <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    @else
-                        <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
-                            <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-16 h-16 text-blue-200" />
+            <div x-data="{ open: false }">
+                <div @click="open = true" class="group flex flex-col bg-white rounded-2xl border border-slate-200/60 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer h-full" data-testid="extracurricular-{{ $i }}">
+                    {{-- Foto Landscape --}}
+                    <div class="aspect-video w-full overflow-hidden relative bg-slate-100 shrink-0">
+                        @if($e['image'])
+                            <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+                                <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-16 h-16 text-blue-200" />
+                            </div>
+                        @endif
+                        <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-300"></div>
+                        
+                        {{-- Indikator Preview (Kaca Pembesar) --}}
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div class="bg-black/50 text-white p-3 rounded-full backdrop-blur-sm shadow-lg">
+                                <x-lucide-search class="w-6 h-6" />
+                            </div>
                         </div>
-                    @endif
-                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-300"></div>
+                    </div>
+
+                    {{-- Konten Text dan Icon --}}
+                    <div class="flex flex-col flex-grow p-6 sm:p-7">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50/80 text-[#1E3A8A] flex items-center justify-center group-hover:bg-[#1E3A8A] group-hover:text-white transition-colors duration-300 shrink-0">
+                                <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-6 h-6" />
+                            </div>
+                            <h3 class="text-xl font-bold text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors line-clamp-1">{{ $e['name'] }}</h3>
+                        </div>
+                        
+                        {{-- Deskripsi Selalu Tampil --}}
+                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
+                            {{ $e['desc'] }}
+                        </p>
+                        
+                        {{-- Aksi --}}
+                        <div class="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-semibold text-[#1E3A8A] group-hover:text-[#1E40AF]">
+                            <span>Selengkapnya</span>
+                            <x-lucide-arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                    </div>
                 </div>
 
-                {{-- Konten Text dan Icon --}}
-                <div class="flex flex-col flex-grow p-6 sm:p-7">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-blue-50/80 text-[#1E3A8A] flex items-center justify-center group-hover:bg-[#1E3A8A] group-hover:text-white transition-colors duration-300 shrink-0">
-                            <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-6 h-6" />
+                {{-- Modal Preview / Detail --}}
+                <template x-teleport="body">
+                    <div x-show="open" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6" x-transition.opacity style="display: none;">
+                        <div @click.away="open = false" class="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]" x-transition x-show="open">
+                            
+                            {{-- Tombol Tutup --}}
+                            <button @click="open = false" class="absolute top-4 right-4 p-2 bg-black/50 text-white rounded-full hover:bg-black/80 transition-colors z-10 shadow-md">
+                                <x-lucide-x class="w-5 h-5" />
+                            </button>
+                            
+                            {{-- Gambar Besar --}}
+                            @if($e['image'])
+                                <img src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-64 sm:h-96 object-cover bg-slate-100 shrink-0" />
+                            @else
+                                <div class="w-full h-64 sm:h-96 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center shrink-0">
+                                    <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-32 h-32 text-blue-200" />
+                                </div>
+                            @endif
+                            
+                            {{-- Konten Detail --}}
+                            <div class="p-6 sm:p-10 overflow-y-auto">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <div class="w-14 h-14 rounded-2xl bg-blue-50 text-[#1E3A8A] flex items-center justify-center shrink-0 shadow-inner">
+                                        <x-dynamic-component :component="'lucide-' . ($e['icon'] ?: 'activity')" class="w-7 h-7" />
+                                    </div>
+                                    <h3 class="text-2xl sm:text-3xl font-bold text-[#0F172A]">{{ $e['name'] }}</h3>
+                                </div>
+                                <div class="prose prose-slate max-w-none">
+                                    <p class="text-slate-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">{{ $e['desc'] }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="text-xl font-bold text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors line-clamp-1">{{ $e['name'] }}</h3>
                     </div>
-                    
-                    {{-- Deskripsi Selalu Tampil --}}
-                    <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
-                        {{ $e['desc'] }}
-                    </p>
-                    
-                    {{-- Aksi --}}
-                    <div class="mt-auto pt-4 border-t border-slate-100 flex items-center text-sm font-semibold text-[#1E3A8A] group-hover:text-[#1E40AF]">
-                        <span>Selengkapnya</span>
-                        <x-lucide-arrow-right class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                </div>
+                </template>
             </div>
             @endforeach
         </div>
