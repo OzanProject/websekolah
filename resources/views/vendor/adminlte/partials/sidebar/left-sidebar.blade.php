@@ -101,6 +101,7 @@
                                 <p>Galeri</p>
                             </a>
                         </li>
+                        @if(auth()->user()->isAdmin())
                         <li class="nav-item">
                             <a href="{{ route('admin.videos.index') }}" class="nav-link {{ Request::is('admin/videos*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -113,6 +114,7 @@
                                 <p>Halaman Kustom</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
 
