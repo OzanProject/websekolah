@@ -17,18 +17,6 @@
 @stop
 
 @section('content')
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            {{ session('success') }}
-        </div>
-    @endif
-    @if(session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            {{ session('error') }}
-        </div>
-    @endif
 
     <div class="card">
         <div class="card-body">
@@ -122,6 +110,9 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": false,
+                "columnDefs": [
+                    { "orderable": false, "targets": [4] }
+                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
                 }
