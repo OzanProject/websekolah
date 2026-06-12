@@ -24,45 +24,47 @@
                 </div>
             @endif
 
-            <table id="pagesTable" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th width="5%">No</th>
-                        <th>Judul Halaman</th>
-                        <th>URL Halaman</th>
-                        <th>Status</th>
-                        <th width="15%">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($pages as $page)
+            <div class="table-responsive">
+                <table id="pagesTable" class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $page->title }}</td>
-                            <td><a href="{{ url('halaman/' . $page->slug) }}" target="_blank">/halaman/{{ $page->slug }} <i class="fas fa-external-link-alt text-xs"></i></a></td>
-                            <td>
-                                @if($page->is_active)
-                                    <span class="badge badge-success">Aktif / Publik</span>
-                                @else
-                                    <span class="badge badge-secondary">Draft / Sembunyi</span>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-sm btn-warning" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus halaman ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th width="5%">No</th>
+                            <th>Judul Halaman</th>
+                            <th>URL Halaman</th>
+                            <th>Status</th>
+                            <th width="15%">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($pages as $page)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $page->title }}</td>
+                                <td><a href="{{ url('halaman/' . $page->slug) }}" target="_blank">/halaman/{{ $page->slug }} <i class="fas fa-external-link-alt text-xs"></i></a></td>
+                                <td>
+                                    @if($page->is_active)
+                                        <span class="badge badge-success">Aktif / Publik</span>
+                                    @else
+                                        <span class="badge badge-secondary">Draft / Sembunyi</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.pages.destroy', $page->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus halaman ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @stop

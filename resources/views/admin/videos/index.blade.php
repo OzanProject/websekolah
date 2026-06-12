@@ -21,54 +21,56 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="videosTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 50px">No</th>
-                        <th>Judul</th>
-                        <th>URL YouTube</th>
-                        <th style="width: 100px" class="text-center">Status</th>
-                        <th style="width: 150px" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($videos as $index => $item)
+            <div class="table-responsive">
+                <table id="videosTable" class="table table-bordered table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td><strong>{{ $item->title }}</strong></td>
-                            <td><a href="{{ $item->url }}" target="_blank" class="text-info"><i class="fas fa-external-link-alt"></i> {{ Str::limit($item->url, 40) }}</a></td>
-                            <td class="text-center">
-                                @if($item->is_active)
-                                    <span class="badge badge-success"><i class="fas fa-check-circle"></i> Aktif</span>
-                                @else
-                                    <span class="badge badge-secondary">Tidak Aktif</span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                @if(!$item->is_active)
-                                <form action="{{ route('admin.videos.activate', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Aktifkan video ini? Video lain akan otomatis dinonaktifkan.">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="btn btn-sm btn-success" title="Jadikan Aktif">
-                                        <i class="fas fa-power-off"></i>
-                                    </button>
-                                </form>
-                                @endif
-                                <a href="{{ route('admin.videos.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.videos.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus video ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th style="width: 50px">No</th>
+                            <th>Judul</th>
+                            <th>URL YouTube</th>
+                            <th style="width: 100px" class="text-center">Status</th>
+                            <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($videos as $index => $item)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td><strong>{{ $item->title }}</strong></td>
+                                <td><a href="{{ $item->url }}" target="_blank" class="text-info"><i class="fas fa-external-link-alt"></i> {{ Str::limit($item->url, 40) }}</a></td>
+                                <td class="text-center">
+                                    @if($item->is_active)
+                                        <span class="badge badge-success"><i class="fas fa-check-circle"></i> Aktif</span>
+                                    @else
+                                        <span class="badge badge-secondary">Tidak Aktif</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if(!$item->is_active)
+                                    <form action="{{ route('admin.videos.activate', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Aktifkan video ini? Video lain akan otomatis dinonaktifkan.">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="btn btn-sm btn-success" title="Jadikan Aktif">
+                                            <i class="fas fa-power-off"></i>
+                                        </button>
+                                    </form>
+                                    @endif
+                                    <a href="{{ route('admin.videos.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.videos.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus video ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @stop

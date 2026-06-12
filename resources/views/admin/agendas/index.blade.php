@@ -35,47 +35,49 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="agendasTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 30px" class="text-center">
-                            <input type="checkbox" id="checkAll">
-                        </th>
-                        <th style="width: 50px">No</th>
-                        <th>Judul Agenda</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
-                        <th>Lokasi</th>
-                        <th style="width: 150px" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($agendas as $index => $item)
-                        <tr id="row-{{ $item->id }}">
-                            <td class="text-center">
-                                <input type="checkbox" class="checkItem" value="{{ $item->id }}">
-                            </td>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->title }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td>
-                            <td>{{ $item->time }}</td>
-                            <td>{{ $item->location }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.agendas.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.agendas.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus agenda ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+            <div class="table-responsive">
+                <table id="agendasTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px" class="text-center">
+                                <input type="checkbox" id="checkAll">
+                            </th>
+                            <th style="width: 50px">No</th>
+                            <th>Judul Agenda</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>
+                            <th>Lokasi</th>
+                            <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($agendas as $index => $item)
+                            <tr id="row-{{ $item->id }}">
+                                <td class="text-center">
+                                    <input type="checkbox" class="checkItem" value="{{ $item->id }}">
+                                </td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td>
+                                <td>{{ $item->time }}</td>
+                                <td>{{ $item->location }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.agendas.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.agendas.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus agenda ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

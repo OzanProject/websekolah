@@ -35,49 +35,51 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="galleriesTable" class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width: 30px" class="text-center">
-                            <input type="checkbox" id="checkAll">
-                        </th>
-                        <th style="width: 50px">No</th>
-                        <th style="width: 150px">Preview Gambar</th>
-                        <th>Judul/Deskripsi Singkat</th>
-                        <th style="width: 150px" class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($galleries as $index => $item)
-                        <tr id="row-{{ $item->id }}">
-                            <td class="text-center">
-                                <input type="checkbox" class="checkItem" value="{{ $item->id }}">
-                            </td>
-                            <td>{{ $index + 1 }}</td>
-                            <td>
-                                @if($item->image_path)
-                                    <img src="{{ filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : Storage::url($item->image_path) }}" alt="{{ $item->title }}" class="img-thumbnail" style="max-height: 80px; width: auto;">
-                                @else
-                                    <span class="badge badge-secondary">Tidak ada foto</span>
-                                @endif
-                            </td>
-                            <td>{{ $item->title }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.galleries.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('admin.galleries.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus foto galeri ini?">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+            <div class="table-responsive">
+                <table id="galleriesTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px" class="text-center">
+                                <input type="checkbox" id="checkAll">
+                            </th>
+                            <th style="width: 50px">No</th>
+                            <th style="width: 150px">Preview Gambar</th>
+                            <th>Judul/Deskripsi Singkat</th>
+                            <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($galleries as $index => $item)
+                            <tr id="row-{{ $item->id }}">
+                                <td class="text-center">
+                                    <input type="checkbox" class="checkItem" value="{{ $item->id }}">
+                                </td>
+                                <td>{{ $index + 1 }}</td>
+                                <td>
+                                    @if($item->image_path)
+                                        <img src="{{ filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : Storage::url($item->image_path) }}" alt="{{ $item->title }}" class="img-thumbnail" style="max-height: 80px; width: auto;">
+                                    @else
+                                        <span class="badge badge-secondary">Tidak ada foto</span>
+                                    @endif
+                                </td>
+                                <td>{{ $item->title }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.galleries.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('admin.galleries.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus foto galeri ini?">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
