@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role', 'is_approved'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -33,5 +33,20 @@ class User extends Authenticatable
     public function news()
     {
         return $this->hasMany(News::class, 'author_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPenulis()
+    {
+        return $this->role === 'penulis';
+    }
+
+    public function isApproved()
+    {
+        return (bool) $this->is_approved;
     }
 }

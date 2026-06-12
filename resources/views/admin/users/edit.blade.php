@@ -28,6 +28,28 @@
                     @enderror
                 </div>
 
+                <div class="form-group">
+                    <label for="role">Peran (Role)</label>
+                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror" required>
+                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="penulis" {{ old('role', $user->role) == 'penulis' ? 'selected' : '' }}>Penulis</option>
+                    </select>
+                    @error('role')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="is_approved">Status Persetujuan</label>
+                    <select name="is_approved" id="is_approved" class="form-control @error('is_approved') is-invalid @enderror" required>
+                        <option value="1" {{ old('is_approved', $user->is_approved) ? 'selected' : '' }}>Aktif (Disetujui)</option>
+                        <option value="0" {{ old('is_approved', $user->is_approved) ? '' : 'selected' }}>Menunggu Persetujuan</option>
+                    </select>
+                    @error('is_approved')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <hr class="mt-4 mb-4">
                 <h5 class="mb-3 text-muted">Ganti Password <small>(Biarkan kosong jika tidak ingin mengubah password)</small></h5>
 

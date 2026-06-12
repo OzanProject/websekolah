@@ -29,6 +29,7 @@
                 </li>
 
                 {{-- INFORMASI SEKOLAH --}}
+                @if(auth()->user()->isAdmin())
                 <li class="nav-item {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') || Request::is('admin/extracurriculars*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('admin/programs*') || Request::is('admin/facilities*') || Request::is('admin/profiles*') || Request::is('admin/navigations*') || Request::is('admin/extracurriculars*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-info-circle"></i>
@@ -70,6 +71,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 {{-- PUBLIKASI & KEGIATAN --}}
                 <li class="nav-item {{ Request::is('admin/news*') || Request::is('admin/agendas*') || Request::is('admin/galleries*') || Request::is('admin/videos*') || Request::is('admin/pages*') ? 'menu-open' : '' }}">
@@ -115,6 +117,7 @@
                 </li>
 
                 {{-- INTERAKSI --}}
+                @if(auth()->user()->isAdmin())
                 <li class="nav-item {{ Request::is('admin/testimonials*') || Request::is('admin/messages*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('admin/testimonials*') || Request::is('admin/messages*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-comments"></i>
@@ -148,8 +151,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 {{-- PENDAFTARAN PPDB --}}
+                @if(auth()->user()->isAdmin())
                 <li class="nav-item {{ Request::is('admin/ppdb*') || Request::is('admin/settings/ppdb*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('admin/ppdb*') || Request::is('admin/settings/ppdb*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-graduate"></i>
@@ -173,8 +178,10 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 {{-- SISTEM --}}
+                @if(auth()->user()->isAdmin())
                 <li class="nav-item {{ Request::is('admin/users*') || Request::is('admin/settings/general*') || Request::is('admin/backups*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ Request::is('admin/users*') || Request::is('admin/settings/general*') || Request::is('admin/backups*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cogs"></i>
@@ -204,6 +211,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
 
                 {{-- Konfigurasi bawaan jika masih ada yang terlewat (opsional, dikomen saja) --}}
                 {{-- @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item') --}}

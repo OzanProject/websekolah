@@ -28,6 +28,28 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="role">Peran (Role)</label>
+                    <select name="role" id="role" class="form-control @error('role') is-invalid @enderror" required>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="penulis" {{ old('role') == 'penulis' ? 'selected' : '' }}>Penulis</option>
+                    </select>
+                    @error('role')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="is_approved">Status Persetujuan</label>
+                    <select name="is_approved" id="is_approved" class="form-control @error('is_approved') is-invalid @enderror" required>
+                        <option value="1" {{ old('is_approved') == '1' ? 'selected' : '' }}>Aktif (Disetujui)</option>
+                        <option value="0" {{ old('is_approved') == '0' ? 'selected' : '' }}>Menunggu Persetujuan</option>
+                    </select>
+                    @error('is_approved')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Minimal 8 karakter" required>
                     @error('password')

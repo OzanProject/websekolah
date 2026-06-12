@@ -29,15 +29,19 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|in:admin,penulis',
+            'is_approved' => 'required|boolean',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'is_approved' => $request->is_approved,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Admin berhasil ditambahkan');
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil ditambahkan');
     }
 
     public function edit(User $user)
@@ -51,11 +55,15 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
+            'role' => 'required|in:admin,penulis',
+            'is_approved' => 'required|boolean',
         ]);
 
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
+            'is_approved' => $request->is_approved,
         ];
 
         if ($request->filled('password')) {
@@ -64,12 +72,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('admin.users.index')->with('success', 'Admin berhasil diperbarui');
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diperbarui');
     }
 
     public function destroy(User $user)
     {
-        if (User::count() <= 1) {
+        if ($user->isAdmin() && User::where('role', 'admin')->count() <= 1) {
             return redirect()->route('admin.users.index')->with('error', 'Tidak dapat menghapus admin terakhir.');
         }
         
@@ -79,7 +87,13 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'Admin berhasil dihapus');
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil dihapus');
+    }
+
+    public function approve(User $user)
+    {
+        $user->update(['is_approved' => true]);
+        return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil disetujui');
     }
 
     public function import(Request $request)

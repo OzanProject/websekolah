@@ -27,6 +27,8 @@
                             <th style="width: 50px">No</th>
                             <th>Nama</th>
                             <th>Email</th>
+                            <th>Peran</th>
+                            <th>Status</th>
                             <th>Tanggal Terdaftar</th>
                             <th style="width: 150px" class="text-center">Aksi</th>
                         </tr>
@@ -43,8 +45,31 @@
                                     @endif
                                 </td>
                                 <td>{{ $item->email }}</td>
+                                <td>
+                                    @if($item->isAdmin())
+                                        <span class="badge badge-primary">Admin</span>
+                                    @else
+                                        <span class="badge badge-info">Penulis</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($item->isApproved())
+                                        <span class="badge badge-success">Aktif</span>
+                                    @else
+                                        <span class="badge badge-warning">Menunggu Persetujuan</span>
+                                    @endif
+                                </td>
                                 <td>{{ $item->created_at->format('d M Y') }}</td>
                                 <td class="text-center">
+                                    @if(!$item->isApproved())
+                                        <form action="{{ route('admin.users.approve', $item->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-sm btn-success" title="Setujui">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                     <a href="{{ route('admin.users.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
@@ -111,7 +136,7 @@
                 "autoWidth": false,
                 "responsive": false,
                 "columnDefs": [
-                    { "orderable": false, "targets": [4] }
+                    { "orderable": false, "targets": [6] }
                 ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
