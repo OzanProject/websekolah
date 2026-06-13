@@ -47,10 +47,10 @@ class BackupController extends Controller
     public function create()
     {
         try {
-            $dbHost = env('DB_HOST', '127.0.0.1');
-            $dbName = env('DB_DATABASE');
-            $dbUser = env('DB_USERNAME');
-            $dbPass = env('DB_PASSWORD');
+            $dbHost = config('database.connections.mysql.host', '127.0.0.1');
+            $dbName = config('database.connections.mysql.database');
+            $dbUser = config('database.connections.mysql.username');
+            $dbPass = config('database.connections.mysql.password');
 
             $filename = 'backup_' . $dbName . '_' . date('Y_m_d_His') . '.sql';
             $filePath = $this->backupPath . DIRECTORY_SEPARATOR . $filename;
