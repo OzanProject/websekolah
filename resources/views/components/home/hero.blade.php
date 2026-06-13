@@ -123,7 +123,7 @@
     </div>
 </section>
 
-@endphp<script>
+<script>
     function heroSlider() {
         return {
             active: 0,
