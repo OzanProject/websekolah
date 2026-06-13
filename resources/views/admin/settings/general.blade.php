@@ -40,9 +40,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="custom_head_tags">Google Site Verification / Analytics / Tag Manager</label>
-                            <textarea class="form-control" style="font-family: monospace;" id="custom_head_tags" name="custom_head_tags" rows="4" placeholder='Contoh: <meta name="google-site-verification" content="..." />'>{{ old('custom_head_tags', $profile->custom_head_tags) }}</textarea>
-                            <small class="text-muted">Kode ini akan disuntikkan langsung ke dalam tag <code>&lt;head&gt;</code> di halaman depan website. Berguna untuk Google Search Console atau Google Analytics.</small>
+                            <label for="google_site_verification">Google Site Verification (Tag HTML)</label>
+                            <input type="text" class="form-control" style="font-family: monospace;" id="google_site_verification" name="google_site_verification" value="{{ old('google_site_verification', $profile->google_site_verification) }}" placeholder='Contoh: <meta name="google-site-verification" content="..." />'>
+                            <small class="text-muted text-success"><i class="fas fa-check-circle"></i> Sangat disarankan. Tidak akan menurunkan skor PageSpeed Anda.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="google_analytics">Script Google Analytics (Opsional)</label>
+                            <textarea class="form-control" style="font-family: monospace;" id="google_analytics" name="google_analytics" rows="4" placeholder="Contoh: <script async src='https://www.googletagmanager.com/gtag/js?id=G-XXXX'></script>...">{{ old('google_analytics', $profile->google_analytics) }}</textarea>
+                            <small class="text-muted text-warning"><i class="fas fa-exclamation-triangle"></i> Peringatan: Menambahkan script ini dapat menurunkan skor Performa / PageSpeed.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="google_tag_manager">Script Google Tag Manager (Opsional)</label>
+                            <textarea class="form-control" style="font-family: monospace;" id="google_tag_manager" name="google_tag_manager" rows="4" placeholder="Contoh: <script>(function(w,d,s,l,i){w[l]=...)</script>...">{{ old('google_tag_manager', $profile->google_tag_manager) }}</textarea>
+                            <small class="text-muted text-warning"><i class="fas fa-exclamation-triangle"></i> Peringatan: Menambahkan script ini dapat menurunkan skor Performa / PageSpeed.</small>
                         </div>
 
                         <div class="row">

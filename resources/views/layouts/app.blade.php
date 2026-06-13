@@ -35,8 +35,16 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"></noscript>
 
-    @if($profile && $profile->custom_head_tags)
-        {!! $profile->custom_head_tags !!}
+    @if($profile && $profile->google_site_verification)
+        {!! $profile->google_site_verification !!}
+    @endif
+
+    @if($profile && $profile->google_analytics)
+        {!! $profile->google_analytics !!}
+    @endif
+
+    @if($profile && $profile->google_tag_manager)
+        {!! $profile->google_tag_manager !!}
     @endif
 
     @stack('preload')
