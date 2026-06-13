@@ -33,6 +33,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    @stack('preload')
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-[#FAFAFA] text-[#0F172A] font-sans selection:bg-[#1E3A8A] selection:text-white">

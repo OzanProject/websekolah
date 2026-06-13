@@ -11,7 +11,7 @@
             <div class="lg:col-span-4">
                 <div class="flex items-center gap-3 mb-5">
                     @if($profile && $profile->school_logo)
-                        <img src="{{ asset('storage/' . $profile->school_logo) }}" alt="Logo" class="w-12 h-12 rounded-lg object-cover bg-white">
+                        <img src="{{ asset('storage/' . $profile->school_logo) }}" alt="Logo" loading="lazy" class="w-12 h-12 rounded-lg object-cover bg-white">
                     @else
                         <div class="w-12 h-12 rounded-lg bg-[#1E3A8A] flex items-center justify-center">
                             <x-lucide-graduation-cap class="w-7 h-7 text-white" />
@@ -27,13 +27,13 @@
                 </p>
                 <div class="flex gap-2">
                     @if($profile && $profile->social_facebook)
-                    <a href="{{ $profile->social_facebook }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#F59E0B] flex items-center justify-center transition" data-testid="footer-facebook"><x-lucide-facebook class="w-4 h-4" /></a>
+                    <a href="{{ $profile->social_facebook }}" target="_blank" aria-label="Facebook" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#D97706] flex items-center justify-center transition" data-testid="footer-facebook"><x-lucide-facebook class="w-4 h-4" /></a>
                     @endif
                     @if($profile && $profile->social_instagram)
-                    <a href="{{ $profile->social_instagram }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#F59E0B] flex items-center justify-center transition" data-testid="footer-instagram"><x-lucide-instagram class="w-4 h-4" /></a>
+                    <a href="{{ $profile->social_instagram }}" target="_blank" aria-label="Instagram" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#D97706] flex items-center justify-center transition" data-testid="footer-instagram"><x-lucide-instagram class="w-4 h-4" /></a>
                     @endif
                     @if($profile && $profile->social_youtube)
-                    <a href="{{ $profile->social_youtube }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#F59E0B] flex items-center justify-center transition" data-testid="footer-youtube"><x-lucide-youtube class="w-4 h-4" /></a>
+                    <a href="{{ $profile->social_youtube }}" target="_blank" aria-label="Youtube" class="w-10 h-10 rounded-lg bg-white/5 hover:bg-[#D97706] flex items-center justify-center transition" data-testid="footer-youtube"><x-lucide-youtube class="w-4 h-4" /></a>
                     @endif
                 </div>
             </div>
