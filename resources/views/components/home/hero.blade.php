@@ -78,7 +78,7 @@
                 @endphp
 
                 @if(!empty($btn1Url))
-                    <a href="{{ $btn1Url }}" class="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#D97706] hover:bg-[#B45309] text-white font-semibold rounded-lg px-7 h-12 text-base shadow-sm" data-testid="hero-ppdb-btn">
+                    <a href="{{ $btn1Url }}" class="inline-flex items-center justify-center whitespace-nowrap ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#F59E0B] hover:bg-[#D97706] text-[#0F172A] font-bold rounded-lg px-7 h-12 text-base shadow-sm" data-testid="hero-ppdb-btn">
                         {{ $btn1Text }}
                         <x-lucide-chevron-right class="w-5 h-5 ml-1" />
                     </a>
