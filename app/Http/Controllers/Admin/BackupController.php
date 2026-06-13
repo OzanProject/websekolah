@@ -47,26 +47,44 @@ class BackupController extends Controller
     public function create()
     {
         try {
-            $dbHost = env('DB_HOST', '127.0.0.1');
-            $dbPort = env('DB_PORT', '3306');
-            $dbName = env('DB_DATABASE');
-            $dbUser = env('DB_USERNAME');
+            // Cek apakah server hosting memblokir fungsi exec
+            if (!function_exists('exec') || !is_callable('exec')) {
+                return back()->with('error', 'Fungsi exec() diblokir oleh pihak Hosting/cPanel. Solusi: Gunakan menu phpMyAdmin di cPanel untuk melakukan Export Database.');
+            }
+
+            $dbHost = escapeshellarg(env('DB_HOST', '127.0.0.1'));
+            $dbPort = escapeshellarg(env('DB_PORT', '3306'));
+            $dbName = escapeshellarg(env('DB_DATABASE'));
+            $dbUser = escapeshellarg(env('DB_USERNAME'));
             $dbPass = env('DB_PASSWORD');
 
-            $filename = 'backup_' . $dbName . '_' . date('Y_m_d_His') . '.sql';
+            $filename = 'backup_' . env('DB_DATABASE') . '_' . date('Y_m_d_His') . '.sql';
             $filePath = $this->backupPath . DIRECTORY_SEPARATOR . $filename;
 
-            // Sesuaikan syntax mysqldump
-            $passwordStr = empty($dbPass) ? '' : "-p\"{$dbPass}\"";
-            $command = "mysqldump -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} > \"{$filePath}\" 2>&1";
+            // Deteksi OS dan lokasi mysqldump
+            $mysqldumpPath = 'mysqldump';
+            if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+                if (file_exists('/usr/bin/mysqldump')) {
+                    $mysqldumpPath = '/usr/bin/mysqldump';
+                }
+            }
+
+            $passwordStr = empty($dbPass) ? '' : "-p" . escapeshellarg($dbPass);
+            $filePathEscaped = escapeshellarg($filePath);
+            
+            $command = "{$mysqldumpPath} -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} > {$filePathEscaped} 2>&1";
 
             exec($command, $output, $returnVar);
 
             if ($returnVar !== 0) {
-                // Hapus file jika gagal dibuat secara sempurna
                 if (File::exists($filePath)) File::delete($filePath);
                 
-                return back()->with('error', 'Gagal membuat backup database. Pesan sistem: ' . implode("\n", $output));
+                $errorMessage = implode("\n", $output);
+                if (empty($errorMessage)) {
+                    $errorMessage = "Server hosting (cPanel) membatasi perintah eksekusi background. Silakan gunakan menu phpMyAdmin untuk backup.";
+                }
+                
+                return back()->with('error', 'Gagal membuat backup database. Pesan sistem: ' . $errorMessage);
             }
 
             return back()->with('success', 'Backup database berhasil dibuat: ' . $filename);
@@ -124,19 +142,32 @@ class BackupController extends Controller
                 return back()->with('error', 'Silakan pilih file backup atau upload file baru.');
             }
 
-            $dbHost = env('DB_HOST', '127.0.0.1');
-            $dbPort = env('DB_PORT', '3306');
-            $dbName = env('DB_DATABASE');
-            $dbUser = env('DB_USERNAME');
+            $dbHost = escapeshellarg(env('DB_HOST', '127.0.0.1'));
+            $dbPort = escapeshellarg(env('DB_PORT', '3306'));
+            $dbName = escapeshellarg(env('DB_DATABASE'));
+            $dbUser = escapeshellarg(env('DB_USERNAME'));
             $dbPass = env('DB_PASSWORD');
 
-            $passwordStr = empty($dbPass) ? '' : "-p\"{$dbPass}\"";
-            $command = "mysql -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} < \"{$filePath}\" 2>&1";
+            $mysqlPath = 'mysql';
+            if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+                if (file_exists('/usr/bin/mysql')) {
+                    $mysqlPath = '/usr/bin/mysql';
+                }
+            }
+
+            $passwordStr = empty($dbPass) ? '' : "-p" . escapeshellarg($dbPass);
+            $filePathEscaped = escapeshellarg($filePath);
+            
+            $command = "{$mysqlPath} -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} < {$filePathEscaped} 2>&1";
 
             exec($command, $output, $returnVar);
 
             if ($returnVar !== 0) {
-                return back()->with('error', 'Gagal merestore database. Pesan sistem: ' . implode("\n", $output));
+                $errorMessage = implode("\n", $output);
+                if (empty($errorMessage)) {
+                    $errorMessage = "Server hosting (cPanel) membatasi perintah eksekusi background. Silakan gunakan menu phpMyAdmin untuk restore.";
+                }
+                return back()->with('error', 'Gagal merestore database. Pesan sistem: ' . $errorMessage);
             }
 
             return back()->with('success', 'Database berhasil di-restore dengan sempurna!');
