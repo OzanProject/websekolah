@@ -90,13 +90,13 @@
             </div>
         </div>
 
-        <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm text-white/50">
+        <div class="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between items-center text-center md:text-left gap-4 text-sm text-white/50">
             <div>
                 © {{ date('Y') }} {{ $profile && $profile->school_name ? $profile->school_name : 'SMP Negeri 4 Kadupandak' }}. {{ __('Semua hak dilindungi.') }}
                 <span class="hidden md:inline mx-2">•</span>
                 <span class="block md:inline mt-2 md:mt-0">Development By <a href="https://ozanproject.site" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#F59E0B] transition-colors font-medium">OzanProject</a></span>
             </div>
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <div class="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2">
                 @if($profile && $profile->school_npsn)<span>NPSN: {{ $profile->school_npsn }}</span>@endif
                 @if($profile && $profile->school_nss)<span>NSS: {{ $profile->school_nss }}</span>@endif
                 @if($profile && $profile->school_accreditation)<span>Akreditasi {{ $profile->school_accreditation }}</span>@endif

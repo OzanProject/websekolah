@@ -1,4 +1,22 @@
 <div x-data="{ open: false }" class="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-3" data-testid="floating-wa">
+    <!-- Scroll to Top Button -->
+    <button x-data="{ show: false }" 
+            @scroll.window="show = window.pageYOffset > 300"
+            @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+            x-show="show"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-300"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            class="bg-white hover:bg-slate-100 text-slate-700 w-12 h-12 rounded-full shadow-xl flex items-center justify-center border border-slate-200 transition-colors" 
+            aria-label="Scroll to top"
+            style="display: none;">
+        <x-lucide-chevron-up class="w-6 h-6" />
+    </button>
+
+    <!-- WA Card -->
     <div x-show="open" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-4" class="bg-white shadow-2xl rounded-2xl border border-slate-200 w-[300px] overflow-hidden" style="display: none;" data-testid="floating-wa-card">
         <div class="bg-[#25D366] text-white px-5 py-4 flex items-center justify-between">
             <div>
