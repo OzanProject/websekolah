@@ -40,11 +40,11 @@
         </div>
 
         <div class="flex justify-center gap-3 mt-10">
-            <button @click="prev" class="w-11 h-11 rounded-full bg-white/10 hover:bg-[#F59E0B] text-white flex items-center justify-center transition-colors" data-testid="testimoni-prev">
-                <x-lucide-chevron-left class="w-5 h-5" />
+            <button aria-label="Previous" @click="prev" class="w-11 h-11 rounded-full bg-white/10 hover:bg-[#F59E0B] text-white flex items-center justify-center transition-all backdrop-blur-sm border border-white/20" data-testid="testimoni-prev">
+                <x-lucide-chevron-left class="w-6 h-6" />
             </button>
-            <button @click="next" class="w-11 h-11 rounded-full bg-white/10 hover:bg-[#F59E0B] text-white flex items-center justify-center transition-colors" data-testid="testimoni-next">
-                <x-lucide-chevron-right class="w-5 h-5" />
+            <button aria-label="Next" @click="next" class="w-11 h-11 rounded-full bg-white/10 hover:bg-[#F59E0B] text-white flex items-center justify-center transition-all backdrop-blur-sm border border-white/20" data-testid="testimoni-next">
+                <x-lucide-chevron-right class="w-6 h-6" />
             </button>
         </div>
     </div>
