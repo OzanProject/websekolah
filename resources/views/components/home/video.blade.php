@@ -19,7 +19,7 @@
 
         <div x-data="{ open: false }" class="relative">
             <div @click="open = true" class="relative aspect-video rounded-2xl overflow-hidden group cursor-pointer shadow-2xl" data-testid="video-thumbnail">
-                <img src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://images.pexels.com/photos/18145430/pexels-photo-18145430.jpeg'" />
+                <img loading="lazy" src="{{ $video->thumbnail_url }}" alt="{{ $video->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" onerror="this.src='https://images.pexels.com/photos/18145430/pexels-photo-18145430.jpeg'" />
                 <div class="absolute inset-0 bg-[#0F172A]/40 group-hover:bg-[#0F172A]/30 transition"></div>
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="relative">

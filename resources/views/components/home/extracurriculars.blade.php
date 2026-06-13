@@ -78,7 +78,7 @@
                             
                             {{-- Gambar Besar --}}
                             @if($e['image'])
-                                <img src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-64 sm:h-96 object-cover bg-slate-100 shrink-0" />
+                                <img loading="lazy" src="{{ $e['image'] }}" alt="{{ $e['name'] }}" class="w-full h-64 sm:h-96 object-cover bg-slate-100 shrink-0" />
                             @else
                                 <div class="absolute right-0 top-0 opacity-10 transform translate-x-10 -translate-y-10">
                                     @if(str_contains($e['icon'], 'fa-'))

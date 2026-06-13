@@ -8,7 +8,7 @@
                 <div class="absolute -top-6 -left-6 w-32 h-32 bg-[#F59E0B] rounded-2xl -z-10"></div>
                 <div class="absolute -bottom-6 -right-6 w-40 h-40 bg-[#EFF6FF] rounded-2xl -z-10"></div>
                 <div class="relative rounded-2xl overflow-hidden border-4 border-white shadow-2xl">
-                    <img src="{{ $profile && $profile->kepsek_image ? asset('storage/' . $profile->kepsek_image) : 'https://images.pexels.com/photos/8197521/pexels-photo-8197521.jpeg' }}" alt="Kepala Sekolah" class="w-full aspect-[4/5] object-cover" data-testid="kepsek-image" />
+                    <img loading="lazy" src="{{ $profile && $profile->kepsek_image ? asset('storage/' . $profile->kepsek_image) : 'https://images.pexels.com/photos/8197521/pexels-photo-8197521.jpeg' }}" alt="Kepala Sekolah" class="w-full aspect-[4/5] object-cover" data-testid="kepsek-image" />
                 </div>
                 <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur rounded-xl p-4 shadow-lg" data-testid="kepsek-badge">
                     <div class="font-bold text-[#0F172A]">{{ $profile && $profile->kepsek_name ? $profile->kepsek_name : 'Nama Kepala Sekolah' }}</div>
