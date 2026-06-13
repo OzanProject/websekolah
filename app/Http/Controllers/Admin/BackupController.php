@@ -47,50 +47,64 @@ class BackupController extends Controller
     public function create()
     {
         try {
-            // Cek apakah server hosting memblokir fungsi exec
-            if (!function_exists('exec') || !is_callable('exec')) {
-                return back()->with('error', 'Fungsi exec() diblokir oleh pihak Hosting/cPanel. Solusi: Gunakan menu phpMyAdmin di cPanel untuk melakukan Export Database.');
-            }
-
-            $dbHost = escapeshellarg(env('DB_HOST', '127.0.0.1'));
-            $dbPort = escapeshellarg(env('DB_PORT', '3306'));
-            $dbName = escapeshellarg(env('DB_DATABASE'));
-            $dbUser = escapeshellarg(env('DB_USERNAME'));
+            $dbHost = env('DB_HOST', '127.0.0.1');
+            $dbName = env('DB_DATABASE');
+            $dbUser = env('DB_USERNAME');
             $dbPass = env('DB_PASSWORD');
 
-            $filename = 'backup_' . env('DB_DATABASE') . '_' . date('Y_m_d_His') . '.sql';
+            $filename = 'backup_' . $dbName . '_' . date('Y_m_d_His') . '.sql';
             $filePath = $this->backupPath . DIRECTORY_SEPARATOR . $filename;
 
-            // Deteksi OS dan lokasi mysqldump
-            $mysqldumpPath = 'mysqldump';
-            if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-                if (file_exists('/usr/bin/mysqldump')) {
-                    $mysqldumpPath = '/usr/bin/mysqldump';
-                }
+            // PURE PHP BACKUP (BYPASS CPANEL EXEC RESTRICTION)
+            $pdo = new \PDO("mysql:host={$dbHost};dbname={$dbName};charset=utf8mb4", $dbUser, $dbPass);
+            $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+
+            $tables = [];
+            $query = $pdo->query('SHOW TABLES');
+            while ($row = $query->fetch(\PDO::FETCH_NUM)) {
+                $tables[] = $row[0];
             }
 
-            $passwordStr = empty($dbPass) ? '' : "-p" . escapeshellarg($dbPass);
-            $filePathEscaped = escapeshellarg($filePath);
-            
-            $command = "{$mysqldumpPath} -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} > {$filePathEscaped} 2>&1";
+            $sql = "-- Database Backup for {$dbName}\n";
+            $sql .= "-- Generated at: " . date('Y-m-d H:i:s') . "\n\n";
+            $sql .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
 
-            exec($command, $output, $returnVar);
+            foreach ($tables as $table) {
+                $query = $pdo->query("SHOW CREATE TABLE `{$table}`");
+                $row = $query->fetch(\PDO::FETCH_NUM);
+                $sql .= "-- Structure for table `{$table}`\n";
+                $sql .= "DROP TABLE IF EXISTS `{$table}`;\n";
+                $sql .= $row[1] . ";\n\n";
 
-            if ($returnVar !== 0) {
-                if (File::exists($filePath)) File::delete($filePath);
-                
-                $errorMessage = implode("\n", $output);
-                if (empty($errorMessage)) {
-                    $errorMessage = "Server hosting (cPanel) membatasi perintah eksekusi background. Silakan gunakan menu phpMyAdmin untuk backup.";
+                $sql .= "-- Data for table `{$table}`\n";
+                $query = $pdo->query("SELECT * FROM `{$table}`");
+                $rowCount = $query->rowCount();
+
+                if ($rowCount > 0) {
+                    $sql .= "INSERT INTO `{$table}` VALUES \n";
+                    $rowsData = [];
+                    while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
+                        $values = [];
+                        foreach ($row as $value) {
+                            if (is_null($value)) {
+                                $values[] = "NULL";
+                            } else {
+                                $values[] = $pdo->quote($value);
+                            }
+                        }
+                        $rowsData[] = "(" . implode(", ", $values) . ")";
+                    }
+                    $sql .= implode(",\n", $rowsData) . ";\n\n";
                 }
-                
-                return back()->with('error', 'Gagal membuat backup database. Pesan sistem: ' . $errorMessage);
             }
+            $sql .= "SET FOREIGN_KEY_CHECKS=1;\n";
 
-            return back()->with('success', 'Backup database berhasil dibuat: ' . $filename);
+            file_put_contents($filePath, $sql);
+
+            return back()->with('success', 'Backup database berhasil dibuat secara otomatis lewat sistem PHP murni: ' . $filename);
 
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat membackup database: ' . $e->getMessage());
         }
     }
 
@@ -142,35 +156,10 @@ class BackupController extends Controller
                 return back()->with('error', 'Silakan pilih file backup atau upload file baru.');
             }
 
-            $dbHost = escapeshellarg(env('DB_HOST', '127.0.0.1'));
-            $dbPort = escapeshellarg(env('DB_PORT', '3306'));
-            $dbName = escapeshellarg(env('DB_DATABASE'));
-            $dbUser = escapeshellarg(env('DB_USERNAME'));
-            $dbPass = env('DB_PASSWORD');
+            // PURE PHP RESTORE (BYPASS CPANEL EXEC RESTRICTION)
+            \Illuminate\Support\Facades\DB::unprepared(file_get_contents($filePath));
 
-            $mysqlPath = 'mysql';
-            if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-                if (file_exists('/usr/bin/mysql')) {
-                    $mysqlPath = '/usr/bin/mysql';
-                }
-            }
-
-            $passwordStr = empty($dbPass) ? '' : "-p" . escapeshellarg($dbPass);
-            $filePathEscaped = escapeshellarg($filePath);
-            
-            $command = "{$mysqlPath} -h {$dbHost} -P {$dbPort} -u {$dbUser} {$passwordStr} {$dbName} < {$filePathEscaped} 2>&1";
-
-            exec($command, $output, $returnVar);
-
-            if ($returnVar !== 0) {
-                $errorMessage = implode("\n", $output);
-                if (empty($errorMessage)) {
-                    $errorMessage = "Server hosting (cPanel) membatasi perintah eksekusi background. Silakan gunakan menu phpMyAdmin untuk restore.";
-                }
-                return back()->with('error', 'Gagal merestore database. Pesan sistem: ' . $errorMessage);
-            }
-
-            return back()->with('success', 'Database berhasil di-restore dengan sempurna!');
+            return back()->with('success', 'Database berhasil di-restore dengan sempurna lewat sistem PHP!');
 
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan sistem saat restore: ' . $e->getMessage());
