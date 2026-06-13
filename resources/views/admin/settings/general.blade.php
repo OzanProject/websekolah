@@ -39,6 +39,12 @@
                             <small class="text-muted">Ditampilkan pada bagian bawah (footer) website.</small>
                         </div>
 
+                        <div class="form-group">
+                            <label for="custom_head_tags">Google Site Verification / Analytics / Tag Manager</label>
+                            <textarea class="form-control" style="font-family: monospace;" id="custom_head_tags" name="custom_head_tags" rows="4" placeholder='Contoh: <meta name="google-site-verification" content="..." />'>{{ old('custom_head_tags', $profile->custom_head_tags) }}</textarea>
+                            <small class="text-muted">Kode ini akan disuntikkan langsung ke dalam tag <code>&lt;head&gt;</code> di halaman depan website. Berguna untuk Google Search Console atau Google Analytics.</small>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">

@@ -38,6 +38,7 @@ class SchoolProfile extends Model
         'school_name',
         'school_tagline',
         'school_description',
+        'custom_head_tags',
         'school_logo',
         'school_npsn',
         'school_nss',
