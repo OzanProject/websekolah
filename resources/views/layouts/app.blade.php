@@ -35,16 +35,20 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap"></noscript>
 
-    @if($profile && $profile->google_site_verification)
-        {!! $profile->google_site_verification !!}
+    @php
+        $globalProfile = \App\Models\SchoolProfile::first();
+    @endphp
+
+    @if($globalProfile && $globalProfile->google_site_verification)
+        {!! $globalProfile->google_site_verification !!}
     @endif
 
-    @if($profile && $profile->google_analytics)
-        {!! $profile->google_analytics !!}
+    @if($globalProfile && $globalProfile->google_analytics)
+        {!! $globalProfile->google_analytics !!}
     @endif
 
-    @if($profile && $profile->google_tag_manager)
-        {!! $profile->google_tag_manager !!}
+    @if($globalProfile && $globalProfile->google_tag_manager)
+        {!! $globalProfile->google_tag_manager !!}
     @endif
 
     @stack('preload')
