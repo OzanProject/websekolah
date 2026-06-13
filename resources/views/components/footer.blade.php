@@ -100,6 +100,9 @@
                 @if($profile && $profile->school_npsn)<span>NPSN: {{ $profile->school_npsn }}</span>@endif
                 @if($profile && $profile->school_nss)<span>NSS: {{ $profile->school_nss }}</span>@endif
                 @if($profile && $profile->school_accreditation)<span>Akreditasi {{ $profile->school_accreditation }}</span>@endif
+                @if($profile)
+                <span class="flex items-center gap-1.5"><x-lucide-users class="w-4 h-4 text-[#F59E0B]" /> {{ number_format($profile->visitor_count ?? 0, 0, ',', '.') }} Pengunjung</span>
+                @endif
             </div>
         </div>
     </div>

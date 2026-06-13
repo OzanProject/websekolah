@@ -14,6 +14,14 @@ class HomeController extends Controller
         $video = \App\Models\Video::where('is_active', true)->first();
         $profile = \App\Models\SchoolProfile::first();
 
+        // Tracker Pengunjung
+        if (!\Illuminate\Support\Facades\Session::has('visited_home')) {
+            if ($profile) {
+                $profile->increment('visitor_count');
+            }
+            \Illuminate\Support\Facades\Session::put('visited_home', true);
+        }
+
         $agenda = $this->getAgenda();
         $gallery = $this->getGallery();
         $facilities = $this->getFacilities();

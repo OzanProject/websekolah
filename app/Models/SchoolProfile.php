@@ -38,6 +38,7 @@ class SchoolProfile extends Model
         'school_name',
         'school_tagline',
         'school_description',
+        'visitor_count',
         'google_site_verification',
         'google_analytics',
         'google_tag_manager',
