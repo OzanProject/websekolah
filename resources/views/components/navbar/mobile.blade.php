@@ -19,7 +19,7 @@
     @if($profile && $profile->ppdb_active)
     <div class="px-2 pt-2 pb-3 space-y-1">
         <a href="{{ route('ppdb.create') }}" class="flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 w-full bg-[#F59E0B] hover:bg-[#D97706] text-white font-semibold rounded-md" data-testid="mobile-nav-ppdb-btn">
-            Daftar PPDB
+            {{ $profile->ppdb_button_text ?: __('Daftar PPDB') }}
         </a>
     </div>
     @endif

@@ -29,6 +29,7 @@ class PpdbSettingController extends Controller
             'ppdb_year' => 'nullable|string|max:255',
             'ppdb_description' => 'nullable|string',
             'ppdb_slug' => 'required|string|max:100|regex:/^[a-zA-Z0-9\-]+$/',
+            'ppdb_button_text' => 'nullable|string|max:100',
         ]);
 
         $profile = SchoolProfile::first();
@@ -41,6 +42,7 @@ class PpdbSettingController extends Controller
             'ppdb_year',
             'ppdb_description',
             'ppdb_slug',
+            'ppdb_button_text',
         ]);
         
         $data['ppdb_active'] = $request->has('ppdb_active');

@@ -9,7 +9,7 @@ class SchoolProfile extends Model
 {
     use HasTranslations;
 
-    public $translatable = ['visi', 'misi', 'sambutan_content', 'ppdb_title', 'ppdb_description'];
+    public $translatable = ['visi', 'misi', 'sambutan_content', 'ppdb_title', 'ppdb_description', 'ppdb_button_text'];
 
     protected $fillable = [
         'visi',
@@ -57,6 +57,7 @@ class SchoolProfile extends Model
         'hero_btn2_text',
         'hero_btn2_url',
         'ppdb_slug',
+        'ppdb_button_text',
     ];
 
     protected $casts = [

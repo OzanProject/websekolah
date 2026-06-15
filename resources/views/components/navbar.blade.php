@@ -44,7 +44,7 @@
             @if($profile && $profile->ppdb_active)
                 <div class="hidden lg:flex items-center">
                     <a href="{{ route('ppdb.create') }}" class="inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-[#0F172A] font-bold rounded-lg px-5" data-testid="nav-ppdb-btn">
-                        {{ __('Daftar PPDB') }}
+                        {{ $profile->ppdb_button_text ?: __('Daftar PPDB') }}
                     </a>
                 </div>
             @endif

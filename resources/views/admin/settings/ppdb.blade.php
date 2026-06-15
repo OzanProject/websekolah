@@ -41,15 +41,26 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="ppdb_slug">URL PPDB (Slug)</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">{{ url('/') }}/</span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ppdb_slug">URL PPDB (Slug)</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">{{ url('/') }}/</span>
+                            </div>
+                            <input type="text" class="form-control" id="ppdb_slug" name="ppdb_slug" value="{{ old('ppdb_slug', $profile->ppdb_slug) }}" placeholder="Contoh: pendaftaran-baru">
+                        </div>
+                        <small class="text-muted d-block mt-1">Hanya huruf, angka, dan tanda strip (-).</small>
                     </div>
-                    <input type="text" class="form-control" id="ppdb_slug" name="ppdb_slug" value="{{ old('ppdb_slug', $profile->ppdb_slug) }}" placeholder="Contoh: pendaftaran-baru">
                 </div>
-                <small class="text-muted d-block mt-1">Jangan gunakan spasi atau karakter spesial. Hanya huruf, angka, dan tanda strip (-).</small>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ppdb_button_text">Teks Tombol di Navbar</label>
+                        <input type="text" class="form-control" id="ppdb_button_text" name="ppdb_button_text" value="{{ old('ppdb_button_text', $profile->ppdb_button_text) }}" placeholder="Contoh: Daftar PPDB, SPMB, dll">
+                        <small class="text-muted d-block mt-1">Teks yang akan muncul di tombol menu atas (navbar).</small>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group mb-0">
