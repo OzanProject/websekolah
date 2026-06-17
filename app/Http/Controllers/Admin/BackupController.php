@@ -52,7 +52,7 @@ class BackupController extends Controller
             $dbUser = config('database.connections.mysql.username');
             $dbPass = config('database.connections.mysql.password');
 
-            $filename = 'backup_' . $dbName . '_' . date('Y_m_d_His') . '.sql';
+            $filename = 'backup_' . $dbName . '_' . now()->format('Y_m_d_His') . '.sql';
             $filePath = $this->backupPath . DIRECTORY_SEPARATOR . $filename;
 
             // PURE PHP BACKUP (BYPASS CPANEL EXEC RESTRICTION)
@@ -66,7 +66,7 @@ class BackupController extends Controller
             }
 
             $sql = "-- Database Backup for {$dbName}\n";
-            $sql .= "-- Generated at: " . date('Y-m-d H:i:s') . "\n\n";
+            $sql .= "-- Generated at: " . now()->format('Y-m-d H:i:s') . "\n\n";
             $sql .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
 
             foreach ($tables as $table) {
@@ -142,7 +142,7 @@ class BackupController extends Controller
                     'backup_file' => 'required|file|mimetypes:text/plain,application/sql|mimes:sql|max:102400', // max 100MB
                 ]);
                 $file = $request->file('backup_file');
-                $filename = 'uploaded_restore_' . date('Y_m_d_His') . '.sql';
+                $filename = 'uploaded_restore_' . now()->format('Y_m_d_His') . '.sql';
                 $file->move($this->backupPath, $filename);
                 $filePath = $this->backupPath . DIRECTORY_SEPARATOR . $filename;
             } 
