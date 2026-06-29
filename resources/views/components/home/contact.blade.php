@@ -84,6 +84,12 @@
             <!-- Form -->
             <form action="{{ route('contact.send') }}" method="POST" x-data="{ loading: false }" @submit="loading = true" class="lg:col-span-3 bg-[#FAFAFA] rounded-2xl p-6 lg:p-10 border border-slate-100" data-testid="contact-form">
                 @csrf
+                <!-- Honeypot anti-spam -->
+                <div class="hidden" aria-hidden="true">
+                    <label for="website_url">Leave this empty if you are human</label>
+                    <input type="text" name="website_url" id="website_url" autocomplete="off" tabindex="-1">
+                </div>
+
                 <h3 class="text-2xl font-bold text-[#0F172A] mb-2">{{ __('Kirim Pesan') }}</h3>
                 <p class="text-slate-600 mb-6">{{ __('Sampaikan pertanyaan, saran, atau pesan Anda kepada kami.') }}</p>
 

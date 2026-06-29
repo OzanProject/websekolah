@@ -34,7 +34,7 @@ Route::get("/{$ppdbSlug}/cek-status", function () use ($ppdbSlug) { return redir
 Route::get('/berita', [NewsController::class, 'index']);
 Route::get('/berita/{slug}', [NewsController::class, 'show']);
 Route::get('/halaman/{slug}', [PageController::class, 'showCustomPage'])->name('custom.page');
-Route::post('/contact/send', [\App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
+Route::post('/contact/send', [\App\Http\Controllers\ContactController::class, 'send'])->name('contact.send')->middleware('throttle:3,1');
 
 Route::get('/locale/{locale}', [\App\Http\Controllers\LocaleController::class, 'setLocale'])->name('locale.switch');
 

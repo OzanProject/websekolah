@@ -51,7 +51,7 @@ class HomeController extends Controller
 
     private function getGallery()
     {
-        return \App\Models\Gallery::take(6)->get()->map(function($item) {
+        return \App\Models\Gallery::latest()->take(6)->get()->map(function($item) {
             return [
                 'src' => filter_var($item->image_path, FILTER_VALIDATE_URL) ? $item->image_path : asset('storage/' . $item->image_path),
                 'title' => $item->title
@@ -61,7 +61,7 @@ class HomeController extends Controller
 
     private function getFacilities()
     {
-        return \App\Models\Facility::take(3)->get()->map(function($item) {
+        return \App\Models\Facility::latest()->take(3)->get()->map(function($item) {
             return [
                 'title' => $item->title,
                 'desc' => $item->description,
@@ -73,7 +73,7 @@ class HomeController extends Controller
 
     private function getTestimonials()
     {
-        return \App\Models\Testimonial::take(6)->get()->map(function($item) {
+        return \App\Models\Testimonial::latest()->take(6)->get()->map(function($item) {
             return [
                 'quote' => $item->quote,
                 'name' => $item->name,
@@ -85,7 +85,7 @@ class HomeController extends Controller
 
     private function getExtracurriculars()
     {
-        return \App\Models\Extracurricular::take(6)->get()->map(function($item) {
+        return \App\Models\Extracurricular::orderBy('name', 'asc')->take(6)->get()->map(function($item) {
             return [
                 'name' => $item->name,
                 'desc' => $item->description,
