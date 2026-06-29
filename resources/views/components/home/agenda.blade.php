@@ -36,6 +36,9 @@
                     <div class="flex-1 min-w-0">
                         <h3 class="text-lg font-bold text-[#0F172A] mb-2 leading-snug group-hover:text-[#1E3A8A] transition-colors">
                             {{ $a['title'] }}
+                            @if($a['is_past'] ?? false)
+                                <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase bg-red-100 text-red-700">Selesai</span>
+                            @endif
                         </h3>
                         <div class="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
                             <span class="flex items-center gap-1.5"><x-lucide-clock class="w-4 h-4 text-[#F59E0B]" /> {{ $a['time'] }}</span>

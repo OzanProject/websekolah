@@ -45,6 +45,7 @@ class PageController extends Controller
                 'month' => $date->translatedFormat('M'),
                 'time' => $item->time,
                 'location' => $item->location,
+                'is_past' => $date->endOfDay()->isPast(),
             ];
         })->toArray();
 

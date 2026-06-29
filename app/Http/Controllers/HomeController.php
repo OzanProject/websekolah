@@ -33,7 +33,9 @@ class HomeController extends Controller
 
     private function getAgenda()
     {
-        return \App\Models\Agenda::orderBy('date', 'asc')->take(4)->get()->map(function($item) {
+        return \App\Models\Agenda::query()
+            ->orderBy('date', 'desc')
+            ->take(4)->get()->map(function($item) {
             $date = \Carbon\Carbon::parse($item->date);
             return [
                 'title' => $item->title,
@@ -42,6 +44,7 @@ class HomeController extends Controller
                 'month' => $date->translatedFormat('M'),
                 'time' => $item->time,
                 'location' => $item->location,
+                'is_past' => $date->endOfDay()->isPast(),
             ];
         })->toArray();
     }
