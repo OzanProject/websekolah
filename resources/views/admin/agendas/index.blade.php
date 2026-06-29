@@ -51,30 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($agendas as $index => $item)
-                            <tr id="row-{{ $item->id }}">
-                                <td class="text-center">
-                                    <input type="checkbox" class="checkItem" value="{{ $item->id }}">
-                                </td>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td>
-                                <td>{{ $item->time }}</td>
-                                <td>{{ $item->location }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('admin.agendas.edit', $item->id) }}" class="btn btn-sm btn-info" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('admin.agendas.destroy', $item->id) }}" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus agenda ini?">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                        <!-- Data akan diisi oleh DataTables melalui AJAX -->
                     </tbody>
                 </table>
             </div>
@@ -118,6 +95,18 @@
     <script>
         $(document).ready(function() {
             var table = $('#agendasTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('admin.agendas.index') }}",
+                columns: [
+                    { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'text-center' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                    { data: 'title', name: 'title' },
+                    { data: 'date', name: 'date' },
+                    { data: 'time', name: 'time' },
+                    { data: 'location', name: 'location' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center' }
+                ],
                 "paging": true,
                 "lengthChange": true,
                 "searching": true,
@@ -125,9 +114,6 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": false,
-                "columnDefs": [
-                    { "orderable": false, "targets": [0, 6] } // Disable ordering on checkbox and action columns
-                ],
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Indonesian.json"
                 }

@@ -14,16 +14,16 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="title">Judul Agenda</label>
-                    <input type="text" name="title" class="form-control" id="title" value="{{ is_array(old('title')) ? '' : old('title', $agenda->title) }}" placeholder="Masukkan judul agenda" required>
+                    <input type="text" name="title" class="form-control" id="title" value="{{ old('title', $agenda->title) }}" placeholder="Masukkan judul agenda" required>
                 </div>
                 <div class="form-group">
                     <label for="location">Lokasi</label>
-                    <input type="text" name="location" class="form-control" id="location" value="{{ is_array(old('location')) ? '' : old('location', $agenda->location) }}" placeholder="Masukkan lokasi agenda" required>
+                    <input type="text" name="location" class="form-control" id="location" value="{{ old('location', $agenda->location) }}" placeholder="Masukkan lokasi agenda" required>
                 </div>
 
                 <div class="form-group">
                     <label for="date">Tanggal</label>
-                    <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" id="date" value="{{ old('date', $agenda->date) }}" required>
+                    <input type="date" name="date" class="form-control @error('date') is-invalid @enderror" id="date" value="{{ old('date', $agenda->date?->format('Y-m-d')) }}" required>
                     @error('date')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror

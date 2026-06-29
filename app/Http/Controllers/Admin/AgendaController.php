@@ -5,16 +5,50 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Agenda;
+use App\Http\Requests\Admin\StoreAgendaRequest;
+use App\Http\Requests\Admin\UpdateAgendaRequest;
+use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\AgendaImport;
 use App\Exports\AgendaTemplateExport;
 
 class AgendaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $agendas = Agenda::orderBy('date', 'desc')->get();
-        return view('admin.agendas.index', compact('agendas'));
+        if ($request->ajax()) {
+            $query = Agenda::select(['id', 'title', 'date', 'time', 'location']);
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('checkbox', function ($row) {
+                    return '<input type="checkbox" class="checkItem" value="' . $row->id . '">';
+                })
+                ->editColumn('date', function ($row) {
+                    return $row->date ? \Carbon\Carbon::parse($row->date)->translatedFormat('d F Y') : '-';
+                })
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('admin.agendas.edit', $row->id);
+                    $deleteUrl = route('admin.agendas.destroy', $row->id);
+                    $csrf = csrf_token();
+                    
+                    return '
+                        <a href="' . $editUrl . '" class="btn btn-sm btn-info" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form action="' . $deleteUrl . '" method="POST" class="d-inline swal-delete-form" data-confirm-msg="Apakah Anda yakin ingin menghapus agenda ini?">
+                            <input type="hidden" name="_token" value="' . $csrf . '">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    ';
+                })
+                ->rawColumns(['checkbox', 'action'])
+                ->make(true);
+        }
+
+        return view('admin.agendas.index');
     }
 
     public function create()
@@ -22,16 +56,9 @@ class AgendaController extends Controller
         return view('admin.agendas.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreAgendaRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'time' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-        ]);
-
-        Agenda::create($request->all());
+        Agenda::create($request->validated());
 
         return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil ditambahkan');
     }
@@ -41,16 +68,9 @@ class AgendaController extends Controller
         return view('admin.agendas.edit', compact('agenda'));
     }
 
-    public function update(Request $request, Agenda $agenda)
+    public function update(UpdateAgendaRequest $request, Agenda $agenda)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'time' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-        ]);
-
-        $agenda->update($request->all());
+        $agenda->update($request->validated());
 
         return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil diperbarui');
     }
