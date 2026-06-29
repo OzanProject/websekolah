@@ -12,15 +12,19 @@
             @csrf
             <div class="card-body">
                 <div class="form-group">
-                    <label for="title_id">Judul / Deskripsi Singkat Foto</label>
-                    <input type="text" name="title[id]" class="form-control" id="title_id" value="{{ old('title.id') }}" placeholder="Masukkan judul foto" required>
+                    <label for="title_id">Judul / Deskripsi Singkat Foto (Opsional)</label>
+                    <input type="text" name="title[id]" class="form-control" id="title_id" value="{{ old('title.id') }}" placeholder="Contoh: Kegiatan Sekolah">
+                    <small class="form-text text-muted">Jika dikosongkan, nama file asli akan otomatis digunakan sebagai judul. Jika Anda mengunggah banyak file dan mengisi ini, akan otomatis diberi nomor urut.</small>
                 </div>
                 
                 <div class="form-group">
-                    <label for="image">File Foto/Gambar</label>
-                    <input type="file" name="image" class="form-control-file @error('image') is-invalid @enderror" id="image" required accept="image/*">
-                    <small class="form-text text-muted">Format yang didukung: JPG, JPEG, PNG, GIF. Maks: 2MB.</small>
-                    @error('image')
+                    <label for="images">File Foto/Gambar (Bisa pilih banyak sekaligus)</label>
+                    <input type="file" name="images[]" class="form-control-file @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" id="images" required accept="image/*" multiple>
+                    <small class="form-text text-muted">Format yang didukung: JPG, JPEG, PNG, GIF. Maks: 2MB per file. (Gunakan CTRL+Klik untuk memilih banyak foto sekaligus)</small>
+                    @error('images')
+                        <span class="invalid-feedback">{{ $message }}</span>
+                    @enderror
+                    @error('images.*')
                         <span class="invalid-feedback">{{ $message }}</span>
                     @enderror
                 </div>

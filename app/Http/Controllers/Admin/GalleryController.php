@@ -26,20 +26,32 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|array',
-            'title.id' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'nullable|array',
+            'title.id' => 'nullable|string|max:255',
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->only(['title']);
+        $baseTitle = $request->input('title.id');
+        $images = $request->file('images');
+        $count = count($images);
 
-        if ($request->hasFile('image')) {
-            $data['image_path'] = \App\Services\ImageService::uploadAndConvertToWebp($request->file('image'), 'galleries');
+        foreach ($images as $index => $image) {
+            $imagePath = \App\Services\ImageService::uploadAndConvertToWebp($image, 'galleries');
+            
+            // Jika ada judul, gunakan judul + nomor urut (jika upload lebih dari 1)
+            // Jika tidak ada judul, gunakan nama asli file (tanpa ekstensi)
+            $titleStr = $baseTitle 
+                ? ($count > 1 ? $baseTitle . ' ' . ($index + 1) : $baseTitle) 
+                : pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+
+            Gallery::create([
+                'title' => ['id' => $titleStr],
+                'image_path' => $imagePath
+            ]);
         }
 
-        Gallery::create($data);
-
-        return redirect()->route('admin.galleries.index')->with('success', 'Foto galeri berhasil ditambahkan');
+        return redirect()->route('admin.galleries.index')->with('success', $count . ' Foto galeri berhasil ditambahkan');
     }
 
     public function edit(Gallery $gallery)
